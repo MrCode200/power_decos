@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: power_decos
+Version: 0.1.0
+Summary: A python package full of different decorator utils
+Author-email: MrCode200 <navidyaghmaei@gmail.com>
+License: MIT
+Keywords: decorators,log,retry,get_time
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: logging
+
+# PowerDecos
+
+A Python package full of various decorator utilities.

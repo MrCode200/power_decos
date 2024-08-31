@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "power_decos"
+version = "0.1.0"
+description = "A python package full of different decorator utils"
+authors = [
+    {name = "MrCode200", email = "navidyaghmaei@gmail.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+dependencies = [
+    "logging"  
+]
+requires-python = ">=3.9"
+keywords = ["decorators", "log", "retry", "get_time"]
+
+[tool.pytest.ini_options]
+minversion = "8.3.2"
+addopts = "-ra -q"
+testpaths = 'tests'
