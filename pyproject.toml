@@ -2,6 +2,12 @@
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+
 [project]
 name = "power_decos"
 version = "0.1.0"
@@ -12,7 +18,7 @@ authors = [
 readme = "README.md"
 license = {text = "MIT"}
 dependencies = [
-    "logging"  
+
 ]
 requires-python = ">=3.9"
 keywords = ["decorators", "log", "retry", "get_time"]
@@ -20,4 +26,4 @@ keywords = ["decorators", "log", "retry", "get_time"]
 [tool.pytest.ini_options]
 minversion = "8.3.2"
 addopts = "-ra -q"
-testpaths = 'tests'
+testpaths = ["tests"]
