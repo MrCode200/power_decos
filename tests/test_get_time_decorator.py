@@ -16,3 +16,6 @@ def test_get_time(capfd):
     capture = capfd.readouterr()
     assert "Function func" in capture.out
 
+if __name__ == "__main__":
+    import pytest
+    pytest.main()

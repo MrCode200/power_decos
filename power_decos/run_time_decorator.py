@@ -11,7 +11,14 @@ def get_time(func: callable) -> callable:
     Wrapps Function and returns execution time
 
     **Prints:**
-    - run_time: float -> the time of the execution of a Function
+    - run_time (float): -> the time of the execution of a Function
+
+    **Returns:**
+    - Callable[..., Any]: The decorated function that prints its execution time.
+
+    **Notes:**
+        - This decorator will print the execution time regardless of whether the function
+          raises an exception or not.
     """
     @wraps(func)
     def wrapper(*args, **kwargs) -> any:

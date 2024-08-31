@@ -33,18 +33,27 @@ def init_logger(
     custom_logfile_formatter=None,
 ):
     """
-    Initialises logger handlers
+    Initializes the logging system by setting up handlers for logging to the terminal
+    and/or a file. Supports JSON and text log formats, as well as rotating file handlers.
 
-    **Params:**
-    - log_in_terminal: bool -> if set to true, logs in terminal
-    - log_in_file: bool -> if set to true, logs in file
-        -logfile_name: str -> name of logfile, if not specified will name the file to todays date
-        - log_file_in_json: bool -> if log file should be formatted in oneLineJson
-        - use_rotating_file_handler -> at max_bytes create new file
-            - max_bytes: int -> after how many bytes to create new file
-            - backup_counts: int -> how many files to save before deleting
-    - custom_logfile_formatter: str -> use custom logfile_formatter
+    Args:
+        log_in_terminal (bool): If True, logs messages to the terminal.
+        log_in_file (bool): If True, logs messages to a file.
+        logfile_name (str, optional): The name of the log file. If None, defaults to a name 
+                                       based on the current date.
+        log_file_in_json (bool): If True, formats log messages as JSON lines in the log file.
+        use_rotating_file_handler (bool): If True, uses a rotating file handler that 
+                                          creates a new file when the log file size exceeds 
+                                          `max_bytes`.
+        max_bytes (int): The maximum size (in bytes) of the log file before it is rotated.
+        backup_counts (int): The number of backup files to keep before deleting the oldest.
+        custom_logfile_formatter (logging.Formatter, optional): A custom formatter for the log file. 
+                                                               If None, defaults to JSONLineFormatter 
+                                                               or a text formatter depending on 
+                                                               `log_file_in_json`.
+
     """
+
     logger.handlers.clear()
 
     # get path of script which called init_logger
