@@ -1,7 +1,7 @@
 """
 Module containing the retry decorator
 
-retry => retries function on exception
+- retry : retries function on exception
 """
 
 from time import sleep
