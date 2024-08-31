@@ -131,3 +131,6 @@ env/
 # Build directories
 dist/
 build/
+
+# Test files only for development
+test.py
