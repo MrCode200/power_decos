@@ -1,4 +1,9 @@
+"""
+Module
+"""
+
 from time import perf_counter
+
 from functools import wraps
 
 def get_time(func: callable) -> callable:

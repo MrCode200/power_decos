@@ -1,9 +1,18 @@
-import logging.handlers
+"""
+Module containin handling all logging code
+
+- log_init() : init and changes how data should be logged
+- log_func() : logs exc data in .jsonl or .log files 
+- log_info() : logs info (message : str) in .jsonl or .log files
+"""
+
 import os
 import sys
-import logging
 from datetime import datetime
 import inspect
+
+import logging
+import logging.handlers
 from functools import wraps
 
 from .logging_fomatter_json import JSONLineFormatter
@@ -21,6 +30,7 @@ def init_logger(
     use_rotating_file_handler: bool = False,
     max_bytes: int = 1024 * 1024,
     backup_counts: int = 3,
+    custom_logfile_formatter=None,
 ):
     """
     Initialises logger handlers
@@ -33,6 +43,7 @@ def init_logger(
         - use_rotating_file_handler -> at max_bytes create new file
             - max_bytes: int -> after how many bytes to create new file
             - backup_counts: int -> how many files to save before deleting
+    - custom_logfile_formatter: str -> use custom logfile_formatter
     """
     logger.handlers.clear()
 
@@ -56,15 +67,24 @@ def init_logger(
             )
         else:
             file_handler = logging.FileHandler(logfile_path)
+
         file_handler.setLevel(logging.DEBUG)
+
         if log_file_in_json:
-            file_handler.setFormatter(JSONLineFormatter)
+            file_handler.setFormatter(
+                custom_logfile_formatter
+                if custom_logfile_formatter is not None
+                else JSONLineFormatter
+            )
         else:
             file_handler.setFormatter(
                 logging.Formatter(
-                    "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s -args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
+                    custom_logfile_formatter
+                    if custom_logfile_formatter is not None
+                    else "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s -args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
                 )
             )
+
         logger.addHandler(file_handler)
 
     if log_in_terminal:  # doesnt work
@@ -73,14 +93,40 @@ def init_logger(
         stream_handler.setLevel(logging.DEBUG)
         stream_handler.setFormatter(
             logging.Formatter(
-                "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s -args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
+                custom_logfile_formatter
+                if custom_logfile_formatter is not None
+                else "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s -args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
             )
         )
 
         logger.addHandler(stream_handler)
 
 
-def log(
+def get_lineNo_fileName() -> tuple[str, str]:
+    # get lineno and caller func.__name__
+    caller_frame = inspect.currentframe().f_back
+    caller_filename = caller_frame.f_globals["__file__"]
+    caller_filename = os.path.basename(caller_filename)
+    lineno = caller_frame.f_lineno
+
+    return caller_filename, lineno
+
+
+def log_info(log_info: str):
+    """
+    Function to log info in terminal or logfile
+
+    **Params:**
+    - log_info: str -> info which gets logged
+    """
+
+    caller_filename, lineno = get_lineNo_fileName()
+
+    extra = {"fileName": caller_filename, "lineNo": lineno, "log_info": log_info}
+    logger.info("NonFunctionLog", extra=extra)
+
+
+def log_func(
     skip_exception: bool = False,
     log_info: str = None,
 ) -> callable:
@@ -89,13 +135,9 @@ def log(
 
     **Params:**
     - skip_exception: bool -> to skip exception or stop program on exception
-    - log_info: str -> log extra
+    - log_info: str -> info which gets logged extra
     """
-    # get lineno and caller func.__name__
-    caller_frame = inspect.currentframe().f_back
-    caller_filename = caller_frame.f_globals["__file__"]
-    caller_filename = os.path.basename(caller_filename)
-    lineno = caller_frame.f_lineno
+    caller_filename, lineno = get_lineNo_fileName()
 
     def decorator(func: callable) -> callable:
         @wraps(func)

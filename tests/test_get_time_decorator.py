@@ -3,7 +3,7 @@ import io
 
 from time import sleep
 
-from decorators import get_time, init_logger
+from power_decos import get_time, init_logger
 
 init_logger(True)
 

@@ -1,6 +1,6 @@
 import pytest
 
-from decorators import retry
+from power_decos import retry
 
 tries = 0
 

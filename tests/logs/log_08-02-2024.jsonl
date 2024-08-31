@@ -1,8 +1,0 @@
-{"timestamp": "2024-08-02 22:05:27.902759", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 6, "function_name": "func_log", "returned": "hello", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:05:45.817908", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 6, "function_name": "func_log", "returned": "hello", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:14:26.652137", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 6, "function_name": "func_log", "returned": "None", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:18:16.243766", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 6, "function_name": "func_log", "returned": "None", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:20:16.583410", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 6, "function_name": "func_log", "returned": "None", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:22:56.102281", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 7, "function_name": "func_log", "returned": "None", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:28:34.127532", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 8, "function_name": "func_log", "returned": "hello", "args": [], "kwargs": {}, "info": null, "exc": null}
-{"timestamp": "2024-08-02 22:29:49.051426", "level": "DEBUG", "file_name": "test_log_decorator.py", "lineno": 9, "function_name": "func_log", "returned": "hello", "args": [], "kwargs": {}, "info": null, "exc": null}

@@ -1,4 +1,5 @@
-"""Contains retry decorator
+"""
+Module containing the retry decorator
 
 retry => retries function on exception
 """
