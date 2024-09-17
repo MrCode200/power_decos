@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>power_decos.log_decorator &mdash; Power Decos 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Power Decos
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">power_decos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Power Decos</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">power_decos.log_decorator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for power_decos.log_decorator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module: logging_manager</span>
+<span class="sd">=======================</span>
+
+<span class="sd">This module handles all logging functionality through the `LoggerManager` class.</span>
+
+<span class="sd">Classes:</span>
+<span class="sd">--------</span>
+
+<span class="sd">- **LoggerManager**: Manages the logging system with various utility methods.</span>
+<span class="sd">  - **__init__()**: Initializes the `LoggerManager` instance.</span>
+<span class="sd">  - **init_logger()**: Configures logging system settings.</span>
+<span class="sd">  - **_get_logfile_path()**: Constructs the path for the log file and ensures the directory exists.</span>
+<span class="sd">  - **_add_file_handler()**: Adds a file handler to the logger with specified configurations.</span>
+<span class="sd">  - **_add_stream_handler()**: Adds a stream handler to the logger.</span>
+<span class="sd">  - **_get_lineNo_fileName()**: Retrieves the line number and file name of the caller.</span>
+<span class="sd">  - **log_info()**: Logs informational messages.</span>
+<span class="sd">  - **log_func()**: Decorator to log function executions and exceptions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">logging.handlers</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+
+<span class="kn">from</span> <span class="nn">.logging_fomatter_json</span> <span class="kn">import</span> <span class="n">JSONLineFormatter</span>
+
+
+<div class="viewcode-block" id="LoggerManager">
+<a class="viewcode-back" href="../../power_decos.html#power_decos.log_decorator.LoggerManager">[docs]</a>
+<span class="k">class</span> <span class="nc">LoggerManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LoggerManager.init_logger">
+<a class="viewcode-back" href="../../power_decos.html#power_decos.log_decorator.LoggerManager.init_logger">[docs]</a>
+    <span class="k">def</span> <span class="nf">init_logger</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">log_in_terminal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">log_in_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">logfile_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">log_file_in_json</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">use_rotating_file_handler</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">max_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">,</span>
+        <span class="n">backup_counts</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">custom_logfile_formatter</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the logging system by setting up handlers for logging to the terminal</span>
+<span class="sd">        and/or a file. Supports JSON and text log formats, as well as rotating file handlers.</span>
+
+<span class="sd">        :keyword log_in_terminal: If True, logs messages to the terminal.</span>
+<span class="sd">        :keyword log_in_file: If True, logs messages to a file.</span>
+<span class="sd">        :keyword logfile_name: The name of the log file. If None, defaults to a name based on the current date.</span>
+<span class="sd">        :keyword log_file_in_json: If True, formats log messages as JSON lines in the log file.</span>
+<span class="sd">        :keyword use_rotating_file_handler: If True, uses a rotating file handler.</span>
+<span class="sd">        :keyword max_bytes: The maximum size (in bytes) of the log file before it is rotated.</span>
+<span class="sd">        :keyword backup_counts: The number of backup files to keep before deleting the oldest.</span>
+<span class="sd">        :keyword custom_logfile_formatter: A custom formatter for the log file. Defaults to JSONLineFormatter or a text formatter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="n">logfile_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_logfile_path</span><span class="p">(</span><span class="n">logfile_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">log_in_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_file_handler</span><span class="p">(</span>
+                <span class="n">logfile_path</span><span class="p">,</span>
+                <span class="n">log_file_in_json</span><span class="p">,</span>
+                <span class="n">use_rotating_file_handler</span><span class="p">,</span>
+                <span class="n">max_bytes</span><span class="p">,</span>
+                <span class="n">backup_counts</span><span class="p">,</span>
+                <span class="n">custom_logfile_formatter</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">log_in_terminal</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_stream_handler</span><span class="p">(</span><span class="n">custom_logfile_formatter</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_logfile_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logfile_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs the path for the log file and ensures the directory exists.</span>
+<span class="sd">        If the directory does not exist, create a new one.</span>
+
+<span class="sd">        :param logfile_name: The name of the log file. If left empty creates a file with the date of today.</span>
+<span class="sd">        :return: The full path to the log file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">script_path</span><span class="p">)</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">logfile_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="n">logfile_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;log_</span><span class="si">{</span><span class="n">today</span><span class="o">.</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">today</span><span class="o">.</span><span class="n">day</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">logfile_name</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_file_handler</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">logfile_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">log_file_in_json</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">use_rotating_file_handler</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+        <span class="n">max_bytes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">backup_counts</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">custom_logfile_formatter</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a file handler to the logger with specified configurations.</span>
+
+<span class="sd">        :param logfile_path: The path to the log file.</span>
+<span class="sd">        :param log_file_in_json: If True, uses JSON format for the log file.</span>
+<span class="sd">        :param use_rotating_file_handler: If True, uses a rotating file handler.</span>
+<span class="sd">        :param max_bytes: The maximum size of the log file before rotation.</span>
+<span class="sd">        :param backup_counts: The number of backup files to keep.</span>
+<span class="sd">        :keyword custom_logfile_formatter: A custom formatter for the log file.</span>
+<span class="sd">            DEFAULT: uses in built formatter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_handler_class</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span> <span class="k">if</span> <span class="n">use_rotating_file_handler</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span>
+        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">file_handler_class</span><span class="p">(</span>
+            <span class="n">filename</span><span class="o">=</span><span class="n">logfile_path</span><span class="p">,</span>
+            <span class="n">maxBytes</span><span class="o">=</span><span class="n">max_bytes</span><span class="p">,</span>
+            <span class="n">backupCount</span><span class="o">=</span><span class="n">backup_counts</span>
+        <span class="p">)</span>
+
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
+            <span class="n">custom_logfile_formatter</span>
+            <span class="k">if</span> <span class="n">custom_logfile_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">JSONLineFormatter</span><span class="p">()</span> <span class="k">if</span> <span class="n">log_file_in_json</span>
+            <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(fileName)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(lineNo)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_stream_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_logfile_formatter</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a stream handler to the logger.</span>
+
+<span class="sd">        :keyword custom_logfile_formatter: A custom formatter for the terminal logs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+        <span class="n">stream_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+        <span class="n">stream_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
+            <span class="n">custom_logfile_formatter</span>
+            <span class="k">if</span> <span class="n">custom_logfile_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(fileName)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(lineNo)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_lineNo_fileName</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the line number and file name of the caller.</span>
+
+<span class="sd">        :return: A tuple containing the file name and line number of the caller.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">caller_frame</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_back</span>
+        <span class="n">caller_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">caller_frame</span><span class="o">.</span><span class="n">f_globals</span><span class="p">[</span><span class="s2">&quot;__file__&quot;</span><span class="p">])</span>
+        <span class="n">lineno</span> <span class="o">=</span> <span class="n">caller_frame</span><span class="o">.</span><span class="n">f_lineno</span>
+        <span class="k">return</span> <span class="n">caller_filename</span><span class="p">,</span> <span class="n">lineno</span>
+
+<div class="viewcode-block" id="LoggerManager.log_info">
+<a class="viewcode-back" href="../../power_decos.html#power_decos.log_decorator.LoggerManager.log_info">[docs]</a>
+    <span class="k">def</span> <span class="nf">log_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_info</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs informational messages to the terminal or log file.</span>
+
+<span class="sd">        :param log_info: The message to be logged.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">caller_filename</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lineNo_fileName</span><span class="p">()</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fileName&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span> <span class="s2">&quot;lineNo&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span> <span class="s2">&quot;log_info&quot;</span><span class="p">:</span> <span class="n">log_info</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;NonFunctionLog&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">extra</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="LoggerManager.log_func">
+<a class="viewcode-back" href="../../power_decos.html#power_decos.log_decorator.LoggerManager.log_func">[docs]</a>
+    <span class="k">def</span> <span class="nf">log_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skip_exception</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">log_info</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">callable</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decorator to log function executions and exceptions.</span>
+
+<span class="sd">        :keyword skip_exception: If True, exceptions are logged but not raised. `DEFAULT: False`</span>
+<span class="sd">        :keyword log_info: Additional information to log. `DEFAULT: Doesn&#39;t log extra information`</span>
+<span class="sd">        :return: The decorated function.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">:</span> <span class="nb">callable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">callable</span><span class="p">:</span>
+            <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
+                <span class="n">caller_filename</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lineNo_fileName</span><span class="p">()</span>
+                <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;fileName&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span>
+                    <span class="s2">&quot;lineNo&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span>
+                    <span class="s2">&quot;custom_func_name&quot;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                    <span class="s2">&quot;custom_args&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span>
+                    <span class="s2">&quot;custom_kwargs&quot;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">,</span>
+                    <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">log_info</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="k">if</span> <span class="n">log_info</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">extra</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">log_info</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">result</span><span class="p">:</span> <span class="nb">any</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">extra</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">result</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+
+                    <span class="n">extra</span><span class="p">[</span><span class="s2">&quot;exc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exc</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">extra</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">skip_exception</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">exc</span>
+
+            <span class="k">return</span> <span class="n">wrapper</span>
+
+        <span class="k">return</span> <span class="n">decorator</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, MrCode200.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
