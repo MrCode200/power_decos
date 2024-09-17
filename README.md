@@ -20,6 +20,7 @@ A Python package full of various decorator utilities.
 ## Table of Contents
 
 - [Installation](#installation)
+- [Testing](#testing)
 - [License](LICENSE.txt)
 - [Documentation](#documentation)
 - [Road Map](#road-map)
