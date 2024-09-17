@@ -1,21 +1,39 @@
 """
-Module: logging_manager
-=======================
+A logging management module that defines the following class:
 
-This module handles all logging functionality through the `LoggerManager` class.
+- `LoggerManager`: Handles all logging functionality with various utility methods.
 
-Classes:
---------
+=======
+Classes
+=======
 
-- **LoggerManager**: Manages the logging system with various utility methods.
-  - **__init__()**: Initializes the `LoggerManager` instance.
-  - **init_logger()**: Configures logging system settings.
-  - **_get_logfile_path()**: Constructs the path for the log file and ensures the directory exists.
-  - **_add_file_handler()**: Adds a file handler to the logger with specified configurations.
-  - **_add_stream_handler()**: Adds a stream handler to the logger.
-  - **_get_lineNo_fileName()**: Retrieves the line number and file name of the caller.
-  - **log_info()**: Logs informational messages.
-  - **log_func()**: Decorator to log function executions and exceptions.
+- `LoggerManager`: Manages the logging system with configurable settings and utility methods.
+
+======================
+How To Use This Module
+======================
+
+1. Import it: ``import logging_manager`` or ``from logging_manager import LoggerManager``.
+
+2. Create an instance of `LoggerManager`:
+
+       logger = LoggerManager()
+
+3. Initialize the logger, specifying a log level and log file (optional):
+
+       logger.init_logger()
+
+4. Log messages at various levels (INFO, DEBUG, etc.):
+
+``       logger.log_info("This is an informational message")``
+
+5. Use `log_func` as a decorator to automatically log function entry, exit, and exceptions:
+
+       @logger.log_func
+       def my_function():
+           # function code
+
+6. Customize the logging configuration as needed by adding/removing handlers or adjusting log format.
 """
 
 import os

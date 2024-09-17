@@ -1,10 +1,14 @@
-![Project Logo](images/logo.png)
+![Project Logo](https://imgs.search.brave.com/lPl-BWFfBCvh025FDErfp0uAWDvVYXzi_YjqXf3AjRM/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG5h/Lmljb25zY291dC5j/b20vaW1nL2V4Y2x1/c2l2ZS4xZTFiZTQ3/LnN2Zw)
 
 # PowerDecos
 
-![Build Status](https://img.shields.io/github/workflow/status/MrCode200/power_deco/CI)
-![Test Coverage](https://img.shields.io/codecov/c/github/MrCode200/power_deco)
-![Version](https://img.shields.io/pypi/v/power_decos)
+|         | Placeholder                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Testing | [![CI - Test](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/MrCode200/power_deco/tests) [![Coverage](https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=main)](https://codecov.io/gh/pandas-dev/pandas)                                                                                                                                                                                                                                                                                                            |
+| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/) [![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/) [![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas)                                                                              |
+| Meta    | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - BSD 3-Clause](https://img.shields.io/pypi/l/pandas.svg)](https://github.com/pandas-dev/pandas/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
+
+
 
 A Python package full of various decorator utilities.
 
@@ -12,6 +16,18 @@ A Python package full of various decorator utilities.
 ### It provides:
 
 - Powerful, Simple but useful decorators
+
+## Table of Contents
+
+- [Installation](#installation)
+- [License](LICENSE.txt)
+- [Documentation](#documentation)
+- [Road Map](#road-map)
+- [Getting Help](#getting-help)
+- [Discussion and Development](#discussion-and-development)
+- [Call for Contributions](#call-for-contributions)
+- [Credits](#credits)
+- [Getting Help](#getting-help)
 
 ### Installation
 
@@ -54,7 +70,7 @@ Please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 - No Credits yet
 
-## Contact
+## Getting Help
 
 For any questions or support, please first read our [FAQ.md](FAQ.md)
 
