@@ -1,15 +1,14 @@
 """
 A logging management module that defines the following class:
 
-- `LoggerManager`: Handles all logging functionality with various utility methods.
+- `LoggerManager`: Handles all logging functionality with configurable settings and utility methods.
 
-=======
 Classes
 =======
 
-- `LoggerManager`: Manages the logging system with configurable settings and utility methods.
+- `LoggerManager`: Manages the logging system with configurable settings, including terminal and file logging,
+  JSON or text formatting, and rotating log files.
 
-======================
 How To Use This Module
 ======================
 
@@ -19,13 +18,13 @@ How To Use This Module
 
        logger = LoggerManager()
 
-3. Initialize the logger, specifying a log level and log file (optional):
+3. Initialize the logger, specifying options such as logging to terminal, file, and format (JSON or text):
 
-       logger.init_logger()
+       logger.init_logger(log_in_terminal=True, log_in_file=True)
 
 4. Log messages at various levels (INFO, DEBUG, etc.):
 
-``       logger.log_info("This is an informational message")``
+       logger.log_info("This is an informational message")
 
 5. Use `log_func` as a decorator to automatically log function entry, exit, and exceptions:
 
@@ -33,7 +32,8 @@ How To Use This Module
        def my_function():
            # function code
 
-6. Customize the logging configuration as needed by adding/removing handlers or adjusting log format.
+6. Customize the logging configuration by adding/removing handlers or adjusting log format as needed.
+
 """
 
 import os

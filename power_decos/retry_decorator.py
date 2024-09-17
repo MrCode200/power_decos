@@ -1,8 +1,52 @@
 """
-Module containing the retry decorator
+A module containing the retry decorator for handling function retries on exceptions.
 
-**Decorators**:
-    - **retry**: Reexecutes function on Exception.
+Decorators
+==========
+
+- `retry`: Re-executes a function upon encountering specific exceptions, with a configurable number of retries and delay between attempts.
+
+Functions
+=========
+
+- `retry`: The main decorator function that enables retry functionality.
+
+    - `retries`: Number of retry attempts (default is 3).
+    - `delay`: Delay in seconds between retry attempts (default is 1).
+    - `raise_exception`: Whether to raise the exception after the final retry (default is False).
+    - `exception_types`: The exception(s) that should trigger a retry. Can be a single type or a tuple of types.
+
+Exception classes
+=================
+
+This module does not define any specific exception classes.
+
+How To Use This Module
+======================
+
+1. Import it: ``import retry_decorator`` or ``from retry_decorator import retry``.
+
+2. Use the `retry` decorator to add retry functionality to a function:
+
+       @retry(retries=3, delay=2, raise_exception=True)
+       def my_function():
+           # function code that may raise an exception
+           pass
+
+3. Customize the retry behavior by adjusting the keyword arguments `retries`, `delay`, `raise_exception`, and `exception_types` as needed.
+
+Example
+=======
+
+```python
+from retry_decorator import retry
+
+@retry(retries=5, delay=1, raise_exception=True)
+def unreliable_function():
+    # Code that may fail and trigger retries
+    pass
+
+unreliable_function()
 """
 
 from time import sleep
