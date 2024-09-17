@@ -144,3 +144,13 @@ _build/
 
 # Sphinx cache
 .sphinx/
+
+# Sphinx documentation building
+/docs/conf.py
+/docs/index.rst
+/docs/make.bat
+/docs/Makefile
+/docs/modules.rst
+/docs/power_decos.rst
+/docs/setup.rst
+/docs/tests.rst
