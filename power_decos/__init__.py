@@ -17,6 +17,6 @@ __author__ = "MrCode200"
 
 from .retry_decorator import retry
 from .run_time_decorator import get_time
-from .log_decorator import log_func, init_logger, log_info
+from .log_decorator import LoggerManager
 
-__all__ = ["retry", "get_time", "log_func", "init_logger", "log_info"]
+__all__ = ["retry", "get_time", LoggerManager]
