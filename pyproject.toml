@@ -30,3 +30,6 @@ testpaths = ["tests"]
 
 [project.optional-dependencies]
 docs = ["sphinx"]
+
+[tool.poetry.extras]
+tests = ["pytest"]
