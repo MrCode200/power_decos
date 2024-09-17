@@ -10,7 +10,7 @@ where = ["."]
 
 [project]
 name = "power_decos"
-version = "0.1.0"
+version = "0.1.1"
 description = "A python package full of different decorator utils"
 authors = [
     {name = "MrCode200", email = "navidyaghmaei@gmail.com"}
@@ -27,3 +27,6 @@ keywords = ["decorators", "log", "retry", "get_time"]
 minversion = "8.3.2"
 addopts = "-ra -q"
 testpaths = ["tests"]
+
+[project.optional-dependencies]
+docs = ["sphinx"]

@@ -133,4 +133,14 @@ dist/
 build/
 
 # Test files only for development
-test.py
+test.py.codiumai
+
+# Codium Ai files
+.codiumai
+
+# Sphinx build directories
+build/
+_build/
+
+# Sphinx cache
+.sphinx/

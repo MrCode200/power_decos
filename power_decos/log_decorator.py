@@ -16,36 +16,6 @@ Classes:
   - **_get_lineNo_fileName()**: Retrieves the line number and file name of the caller.
   - **log_info()**: Logs informational messages.
   - **log_func()**: Decorator to log function executions and exceptions.
-
-Usage Example:
---------------
-
-```python
-from logging_manager import LoggerManager
-
-# Create an instance of LoggerManager
-logger_manager = LoggerManager()
-
-# Initialize the logger with desired configurations
-logger_manager.init_logger(
-    log_in_terminal=True,
-    log_in_file=True,
-    logfile_name="my_log_file",
-    log_file_in_json=False,
-    use_rotating_file_handler=True,
-    max_bytes=1024 * 1024 * 5,  # 5 MB
-    backup_counts=5
-)
-
-# Log an informational message
-logger_manager.log_info("This is an info message.")
-
-@logger_manager.log_func(log_info="Executing sample_function")
-def sample_function(x, y):
-    return x + y
-
-# Call the decorated function
-result = sample_function(10, 20)
 """
 
 import os

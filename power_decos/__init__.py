@@ -2,9 +2,12 @@
 Package full of decorator utils
 
 *Decorators:*
-- retry(num_of_retries=3, interval=1) : reexecutes function 
+
+- retry(num_of_retries=3, interval=1) : reexecutes function
+
 - get_time() : prints execution time of function
-- log_decorator
+
+- log_decorator :
     - log_init() : init and changes how data should be logged
     - log_func() : logs exc data in .jsonl or .log files 
     - log_info() : logs info (message : str) in .jsonl or .log files
