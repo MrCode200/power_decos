@@ -29,7 +29,7 @@ If you encounter or witness behavior that doesn’t align with our Code of Condu
 1. **Report It**: Reach out to us at [luffydmoneky19992024@gmail.com](mailto:luffydmoneky19992024@gmail.com) to report any concerns.
 2. **What Happens Next**: Once a report is received, we’ll review it and determine the best course of action. We aim to resolve issues promptly and fairly.
 3. **Confidentiality**: We respect your privacy. Reports will be handled confidentially, and we’ll protect the identities of all parties involved. 
-### Dont know what the 3rd exactly means
+### Dont know what the 3rd exactly means so sry no confidentiality
 
 ## Our Commitment
 
