@@ -2,7 +2,6 @@
 
 # PowerDecos
 
----------------------------
 ![Build Status](https://img.shields.io/github/workflow/status/MrCode200/power_deco/CI)
 ![Test Coverage](https://img.shields.io/codecov/c/github/MrCode200/power_deco)
 ![Version](https://img.shields.io/pypi/v/power_decos)
@@ -30,7 +29,6 @@ PowerDecos requires `pytest`.  Tests can then be run after installation with:
 
 ## Documentation
 
----------------------------
 - To view documentation in your website click [here](https://rawcdn.githack.com/MrCode200/power_deco/11d24c66d5ee9304c11eaded9f19b04a360b0bbc/docs/html/index.html).
 
 Or
@@ -40,13 +38,11 @@ Or
 
 ## Road Map
 
----------------------------
 1. [ ] Finish Documentation
 
 
 ## Call for Contributions
 
----------------------------
 We’re excited that you’re interested in contributing to PowerDecos! Whether you’re fixing bugs, adding new features, improving documentation, or simply suggesting enhancements, your contributions are invaluable to us.
 
 
