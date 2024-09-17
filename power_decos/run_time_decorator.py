@@ -1,10 +1,17 @@
 """
-Module
+Module containing the retry decorator
+
+**Decorators**:
+    - **get_time**: Wrapps Function and returns execution time
 """
 
+import logging
 from time import perf_counter
-
 from functools import wraps
+
+# Initialize logger
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 def get_time(func: callable) -> callable:
     """
@@ -13,10 +20,9 @@ def get_time(func: callable) -> callable:
     **Prints:**
     - run_time (float): -> the time of the execution of a Function
 
-    **Returns:**
-    - Callable[..., Any]: The decorated function that prints its execution time.
+    :return: Callable[..., Any]: The decorated function that prints its execution time.
 
-    **Notes:**
+    :note:
         - This decorator will print the execution time regardless of whether the function
           raises an exception or not.
     """
@@ -27,9 +33,8 @@ def get_time(func: callable) -> callable:
         result: any = func(*args, **kwargs)
         end_time: float = perf_counter()
 
-        print(
-            f"Function {func.__name__} took {end_time - start_time:.3f} seconds to execute"
-        )
+        logger.info(f"Function {func.__name__} took {end_time - start_time:.3f} seconds to execute")
+
         return result
 
     return wrapper
