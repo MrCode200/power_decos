@@ -1,8 +1,0 @@
-power_decos
-===========
-
-.. toctree::
-   :maxdepth: 4
-
-   power_decos
-   tests
