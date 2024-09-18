@@ -34,6 +34,9 @@ How To Use This Module
 
 6. Customize the logging configuration by adding/removing handlers or adjusting log format as needed.
 
+7. Clean up resources explicitly if needed using the `__del__` method which is automatically called when the instance is about to be destroyed.
+    This should be used when needing to access the log json files
+
 """
 
 import os
@@ -55,7 +58,7 @@ class LoggerManager:
     def init_logger(
         self,
         log_in_terminal: bool = False,
-        log_in_file: bool = False,
+        log_in_file: bool = True,
         logfile_name: str = None,
         log_file_in_json: bool = True,
         use_rotating_file_handler: bool = False,
@@ -66,6 +69,14 @@ class LoggerManager:
         """
         Initializes the logging system by setting up handlers for logging to the terminal
         and/or a file. Supports JSON and text log formats, as well as rotating file handlers.
+
+        Note: The log file (e.g., .jsonl) cannot be accessed or modified while a handler is actively using it.
+        Ensure to release file handlers before accessing the log file.
+        This can be done in two ways:
+
+        1. del instance
+        2. instance(log_in_file = False)
+
 
         :keyword log_in_terminal: If True, logs messages to the terminal.
         :keyword log_in_file: If True, logs messages to a file.
@@ -100,7 +111,7 @@ class LoggerManager:
         :param logfile_name: The name of the log file. If left empty creates a file with the date of today.
         :return: The full path to the log file.
         """
-        script_path = os.path.abspath(sys.argv[0])
+        script_path = os.path.abspath(sys.argv[1])
         script_dir = os.path.dirname(script_path)
         log_dir = os.path.join(script_dir, "logs")
         os.makedirs(log_dir, exist_ok=True)
@@ -132,11 +143,14 @@ class LoggerManager:
             DEFAULT: uses in built formatter
         """
         file_handler_class = logging.handlers.RotatingFileHandler if use_rotating_file_handler else logging.FileHandler
-        file_handler = file_handler_class(
-            filename=logfile_path,
-            maxBytes=max_bytes,
-            backupCount=backup_counts
-        )
+        if use_rotating_file_handler:
+            file_handler = file_handler_class(
+                filename=logfile_path,
+                backupCount=backup_counts,
+                maxBytes=max_bytes
+            )
+        else:
+            file_handler = file_handler_class(filename=logfile_path)
 
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(
@@ -144,7 +158,7 @@ class LoggerManager:
             if custom_logfile_formatter is not None
             else JSONLineFormatter() if log_file_in_json
             else logging.Formatter(
-                "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s - args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
+                "[%(levelname)s|%(custom_file_name)s/%(custom_func_name)s|%(custom_lineno)s] %(asctime)s - args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
             )
         )
         self.logger.addHandler(file_handler)
@@ -161,7 +175,7 @@ class LoggerManager:
             custom_logfile_formatter
             if custom_logfile_formatter is not None
             else logging.Formatter(
-                "[%(levelname)s|%(fileName)s/%(custom_func_name)s|%(lineNo)s] %(asctime)s - args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
+                "[%(levelname)s|%(custom_file_name)s/%(custom_func_name)s|%(custom_lineno)s] %(asctime)s - args/kwargs: %(custom_args)s/%(custom_kwargs)s Returned: %(message)s"
             )
         )
         self.logger.addHandler(stream_handler)
@@ -184,7 +198,16 @@ class LoggerManager:
         :param log_info: The message to be logged.
         """
         caller_filename, lineno = self._get_lineNo_fileName()
-        extra = {"fileName": caller_filename, "lineNo": lineno, "log_info": log_info}
+        extra = {
+            "custom_file_name": caller_filename,  # Use default value None if not present
+            "custom_lineno": lineno,
+            "custom_func_name": None,
+            "custom_args" :  {},
+            "custom_kwargs" :  {},
+            "info": log_info,
+            "exc": None
+        }
+
         self.logger.info("NonFunctionLog", extra=extra)
 
     def log_func(self, skip_exception: bool = False, log_info: str = None) -> callable:
@@ -200,8 +223,8 @@ class LoggerManager:
             def wrapper(*args, **kwargs) -> any:
                 caller_filename, lineno = self._get_lineNo_fileName()
                 extra = {
-                    "fileName": caller_filename,
-                    "lineNo": lineno,
+                    "custom_file_name": caller_filename,
+                    "custom_lineno": lineno,
                     "custom_func_name": func.__name__,
                     "custom_args": args,
                     "custom_kwargs": kwargs,
@@ -226,3 +249,8 @@ class LoggerManager:
             return wrapper
 
         return decorator
+
+    def __del__(self):
+        for handler in self.logger.handlers:
+            handler.close()
+            self.logger.removeHandler(handler)
