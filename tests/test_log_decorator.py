@@ -45,6 +45,25 @@ def test_get_logfile_path_creates_directory():
     assert os.path.exists(expected_path), f"Log file not created at expected path: {expected_path}"
 
 
+def test_func_log_terminal(caplog):
+    """
+    Test to check if the terminal log is working correctly using caplog.
+    """
+    # Reinitialize logger to only log in the terminal
+    logger_manager.init_logger(log_in_terminal=True, log_in_file=False)
+
+    with caplog.at_level(logging.INFO):
+        logger_manager.log_info("Testing terminal log")
+
+    # Check if logs were captured in the terminal
+    assert len(caplog.records) == 1, "No logs captured in terminal"
+    log_record = caplog.records[0]
+
+    # Validate the log record contents
+    assert log_record.message == "NonFunctionLog", "Unexpected log message"
+    assert log_record.levelname == "INFO", "Unexpected log level"
+    
+    
 def test_func_log_file_json():
     """
     Test to check if the json log is working correctly.
