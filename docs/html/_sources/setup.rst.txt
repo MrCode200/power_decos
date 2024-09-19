@@ -1,7 +1,7 @@
-setup module
+setup file
 ============
 
-.. automodule:: setup
+.. automodule:: pyproject.toml
    :members:
    :undoc-members:
    :show-inheritance:

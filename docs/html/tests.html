@@ -46,10 +46,24 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">power_decos</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="power_decos.html">power_decos package</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">tests package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests-test-cache-decorator-module">tests.test_cache_decorator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.cache"><code class="docutils literal notranslate"><span class="pre">cache()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_cache_performance"><code class="docutils literal notranslate"><span class="pre">test_cache_performance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_clear_cache"><code class="docutils literal notranslate"><span class="pre">test_clear_cache()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_get_cached_value_exact_match"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_exact_match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_get_cached_value_no_match"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_no_match()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_get_cached_value_partial_match_args"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_partial_match_args()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_cache_decorator.test_get_cached_value_partial_match_kwargs"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_partial_match_kwargs()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-tests.test_log_decorator">tests.test_log_decorator module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_log_decorator.cleanup_files"><code class="docutils literal notranslate"><span class="pre">cleanup_files()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_log_decorator.test_func_log_file_json"><code class="docutils literal notranslate"><span class="pre">test_func_log_file_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests.test_log_decorator.test_func_log_terminal"><code class="docutils literal notranslate"><span class="pre">test_func_log_terminal()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#tests.test_log_decorator.test_get_logfile_path_creates_directory"><code class="docutils literal notranslate"><span class="pre">test_get_logfile_path_creates_directory()</span></code></a></li>
 </ul>
 </li>
@@ -100,13 +114,76 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
 </section>
+<section id="tests-test-cache-decorator-module">
+<h2>tests.test_cache_decorator module<a class="headerlink" href="#tests-test-cache-decorator-module" title="Link to this heading"></a></h2>
+<dl class="py function" id="module-tests.test_cache_decorator">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.cache">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.cache" title="Link to this definition"></a></dt>
+<dd><p>Fixture to provide a fresh Cache instance.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_cache_performance">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_cache_performance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_cache_performance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_cache_performance" title="Link to this definition"></a></dt>
+<dd><p>Test that &#64;cache decorator improves performance by using time.sleep.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_clear_cache">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_clear_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_clear_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_clear_cache" title="Link to this definition"></a></dt>
+<dd><p>Test that clear_cache method empties the cache.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_get_cached_value_exact_match">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_get_cached_value_exact_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_get_cached_value_exact_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_get_cached_value_exact_match" title="Link to this definition"></a></dt>
+<dd><p>Test that get_cached_value returns the correct result for an exact match.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_get_cached_value_no_match">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_get_cached_value_no_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_get_cached_value_no_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_get_cached_value_no_match" title="Link to this definition"></a></dt>
+<dd><p>Test that get_cached_value returns None when no match is found.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_get_cached_value_partial_match_args">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_get_cached_value_partial_match_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_get_cached_value_partial_match_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_get_cached_value_partial_match_args" title="Link to this definition"></a></dt>
+<dd><p>Test that get_cached_value returns results for partial match on args.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_cache_decorator.test_get_cached_value_partial_match_kwargs">
+<span class="sig-prename descclassname"><span class="pre">tests.test_cache_decorator.</span></span><span class="sig-name descname"><span class="pre">test_get_cached_value_partial_match_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_cache_decorator.html#test_get_cached_value_partial_match_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_cache_decorator.test_get_cached_value_partial_match_kwargs" title="Link to this definition"></a></dt>
+<dd><p>Test that get_cached_value returns results for partial match on kwargs.</p>
+</dd></dl>
+
+</section>
 <section id="module-tests.test_log_decorator">
 <span id="tests-test-log-decorator-module"></span><h2>tests.test_log_decorator module<a class="headerlink" href="#module-tests.test_log_decorator" title="Link to this heading"></a></h2>
 <p>test_func_log_terminal not working</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="tests.test_log_decorator.cleanup_files">
+<span class="sig-prename descclassname"><span class="pre">tests.test_log_decorator.</span></span><span class="sig-name descname"><span class="pre">cleanup_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_log_decorator.html#cleanup_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_log_decorator.cleanup_files" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_log_decorator.test_func_log_file_json">
+<span class="sig-prename descclassname"><span class="pre">tests.test_log_decorator.</span></span><span class="sig-name descname"><span class="pre">test_func_log_file_json</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_log_decorator.html#test_func_log_file_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_log_decorator.test_func_log_file_json" title="Link to this definition"></a></dt>
+<dd><p>Test to check if the json log is working correctly.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tests.test_log_decorator.test_func_log_terminal">
+<span class="sig-prename descclassname"><span class="pre">tests.test_log_decorator.</span></span><span class="sig-name descname"><span class="pre">test_func_log_terminal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">caplog</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_log_decorator.html#test_func_log_terminal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_log_decorator.test_func_log_terminal" title="Link to this definition"></a></dt>
+<dd><p>Test to check if the terminal log is working correctly using caplog.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="tests.test_log_decorator.test_get_logfile_path_creates_directory">
 <span class="sig-prename descclassname"><span class="pre">tests.test_log_decorator.</span></span><span class="sig-name descname"><span class="pre">test_get_logfile_path_creates_directory</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tests/test_log_decorator.html#test_get_logfile_path_creates_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.test_log_decorator.test_get_logfile_path_creates_directory" title="Link to this definition"></a></dt>
-<dd><p>_get_logfile_path creates the log directory if it doesn’t exist</p>
+<dd><p>Test function to validate the creation of log directory and file path by the LoggerManager’s _get_logfile_path method.
+Also validates the correct date-based naming of the log file when logfile_name is None.</p>
 </dd></dl>
 
 </section>

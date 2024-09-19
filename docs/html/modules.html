@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="power_decos package" href="power_decos.html" />
+    <link rel="next" title="setup file" href="setup.html" />
     <link rel="prev" title="Power Decos documentation" href="index.html" /> 
 </head>
 
@@ -47,6 +47,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">power_decos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup file</a></li>
 <li class="toctree-l2"><a class="reference internal" href="power_decos.html">power_decos package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
 </ul>
@@ -81,8 +82,20 @@
 <h1>power_decos<a class="headerlink" href="#power-decos" title="Link to this heading"></a></h1>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">setup file</a></li>
 <li class="toctree-l1"><a class="reference internal" href="power_decos.html">power_decos package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="power_decos.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_decos.html#module-power_decos.cache_decorator">power_decos.cache_decorator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#cache-module">cache_module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.cache_decorator.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.cache_decorator.Cache.cache_func"><code class="docutils literal notranslate"><span class="pre">Cache.cache_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.cache_decorator.Cache.clear_cache"><code class="docutils literal notranslate"><span class="pre">Cache.clear_cache()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.cache_decorator.Cache.get_cached_value"><code class="docutils literal notranslate"><span class="pre">Cache.get_cached_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.cache_decorator.Cache.manual_cache"><code class="docutils literal notranslate"><span class="pre">Cache.manual_cache()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="power_decos.html#module-power_decos.log_decorator">power_decos.log_decorator module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="power_decos.html#classes">Classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="power_decos.html#how-to-use-this-module">How To Use This Module</a></li>
@@ -90,13 +103,6 @@
 <li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.log_decorator.LoggerManager.init_logger"><code class="docutils literal notranslate"><span class="pre">LoggerManager.init_logger()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.log_decorator.LoggerManager.log_func"><code class="docutils literal notranslate"><span class="pre">LoggerManager.log_func()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.log_decorator.LoggerManager.log_info"><code class="docutils literal notranslate"><span class="pre">LoggerManager.log_info()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="power_decos.html#module-power_decos.logging_fomatter_json">power_decos.logging_fomatter_json module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.logging_fomatter_json.JSONLineFormatter"><code class="docutils literal notranslate"><span class="pre">JSONLineFormatter</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.logging_fomatter_json.JSONLineFormatter.format"><code class="docutils literal notranslate"><span class="pre">JSONLineFormatter.format()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -119,12 +125,42 @@
 <li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.run_time_decorator.get_time"><code class="docutils literal notranslate"><span class="pre">get_time()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="power_decos.html#module-power_decos">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="power_decos.html#module-power_decos">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.Cache"><code class="docutils literal notranslate"><span class="pre">Cache</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.Cache.cache_func"><code class="docutils literal notranslate"><span class="pre">Cache.cache_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.Cache.clear_cache"><code class="docutils literal notranslate"><span class="pre">Cache.clear_cache()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.Cache.get_cached_value"><code class="docutils literal notranslate"><span class="pre">Cache.get_cached_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.Cache.manual_cache"><code class="docutils literal notranslate"><span class="pre">Cache.manual_cache()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.LoggerManager"><code class="docutils literal notranslate"><span class="pre">LoggerManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.LoggerManager.init_logger"><code class="docutils literal notranslate"><span class="pre">LoggerManager.init_logger()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.LoggerManager.log_func"><code class="docutils literal notranslate"><span class="pre">LoggerManager.log_func()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="power_decos.html#power_decos.LoggerManager.log_info"><code class="docutils literal notranslate"><span class="pre">LoggerManager.log_info()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.get_time"><code class="docutils literal notranslate"><span class="pre">get_time()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="power_decos.html#power_decos.retry"><code class="docutils literal notranslate"><span class="pre">retry()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">tests package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html#tests-test-cache-decorator-module">tests.test_cache_decorator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.cache"><code class="docutils literal notranslate"><span class="pre">cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_cache_performance"><code class="docutils literal notranslate"><span class="pre">test_cache_performance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_clear_cache"><code class="docutils literal notranslate"><span class="pre">test_clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_get_cached_value_exact_match"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_exact_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_get_cached_value_no_match"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_no_match()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_get_cached_value_partial_match_args"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_partial_match_args()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_cache_decorator.test_get_cached_value_partial_match_kwargs"><code class="docutils literal notranslate"><span class="pre">test_get_cached_value_partial_match_kwargs()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#module-tests.test_log_decorator">tests.test_log_decorator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_log_decorator.cleanup_files"><code class="docutils literal notranslate"><span class="pre">cleanup_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_log_decorator.test_func_log_file_json"><code class="docutils literal notranslate"><span class="pre">test_func_log_file_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_log_decorator.test_func_log_terminal"><code class="docutils literal notranslate"><span class="pre">test_func_log_terminal()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="tests.html#tests.test_log_decorator.test_get_logfile_path_creates_directory"><code class="docutils literal notranslate"><span class="pre">test_get_logfile_path_creates_directory()</span></code></a></li>
 </ul>
 </li>
@@ -150,7 +186,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Power Decos documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="power_decos.html" class="btn btn-neutral float-right" title="power_decos package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="setup.html" class="btn btn-neutral float-right" title="setup file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

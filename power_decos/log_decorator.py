@@ -47,7 +47,7 @@ from datetime import datetime
 from functools import wraps
 import inspect
 
-from .logging_fomatter_json import JSONLineFormatter
+from ._logging_fomatter_json import JSONLineFormatter
 
 
 class LoggerManager:

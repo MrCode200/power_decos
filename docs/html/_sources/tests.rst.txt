@@ -4,6 +4,14 @@ tests package
 Submodules
 ----------
 
+tests.test\_cache\_decorator module
+---------------------------------
+
+.. automodule:: tests.test_cache_decorator
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 tests.test\_log\_decorator module
 ---------------------------------
 

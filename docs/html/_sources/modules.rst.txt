@@ -4,5 +4,6 @@ power_decos
 .. toctree::
    :maxdepth: 4
 
+   setup
    power_decos
    tests

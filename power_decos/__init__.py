@@ -16,6 +16,7 @@ Package full of utility decorators
     - `clear_cache()`: Clears the cache, resetting it to an empty state.
     - `manual_cache(func_name: callable, return_value: any, *args, **kwargs)`: Manually adds a result to the cache.
     - `cache(func: callable)`: Decorator that caches the result of a function call.
+    - `get_cached_value(func_name: callable, compare_all: bool = True, *args, **kwargs)` : Retrieve cached results based on function name and optionally arguments.
 
 This module provides easy-to-use decorators for common tasks like retrying failed operations, measuring execution time, structured logging, and result caching.
 

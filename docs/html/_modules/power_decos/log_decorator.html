@@ -107,6 +107,9 @@
 
 <span class="sd">6. Customize the logging configuration by adding/removing handlers or adjusting log format as needed.</span>
 
+<span class="sd">7. Clean up resources explicitly if needed using the `__del__` method which is automatically called when the instance is about to be destroyed.</span>
+<span class="sd">    This should be used when needing to access the log json files</span>
+
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
@@ -117,7 +120,7 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
 
-<span class="kn">from</span> <span class="nn">.logging_fomatter_json</span> <span class="kn">import</span> <span class="n">JSONLineFormatter</span>
+<span class="kn">from</span> <span class="nn">._logging_fomatter_json</span> <span class="kn">import</span> <span class="n">JSONLineFormatter</span>
 
 
 <div class="viewcode-block" id="LoggerManager">
@@ -132,7 +135,7 @@
     <span class="k">def</span> <span class="nf">init_logger</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">log_in_terminal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">log_in_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">log_in_file</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">logfile_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">log_file_in_json</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">use_rotating_file_handler</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -143,6 +146,14 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes the logging system by setting up handlers for logging to the terminal</span>
 <span class="sd">        and/or a file. Supports JSON and text log formats, as well as rotating file handlers.</span>
+
+<span class="sd">        Note: The log file (e.g., .jsonl) cannot be accessed or modified while a handler is actively using it.</span>
+<span class="sd">        Ensure to release file handlers before accessing the log file.</span>
+<span class="sd">        This can be done in two ways:</span>
+
+<span class="sd">        1. del instance</span>
+<span class="sd">        2. instance(log_in_file = False)</span>
+
 
 <span class="sd">        :keyword log_in_terminal: If True, logs messages to the terminal.</span>
 <span class="sd">        :keyword log_in_file: If True, logs messages to a file.</span>
@@ -178,7 +189,7 @@
 <span class="sd">        :param logfile_name: The name of the log file. If left empty creates a file with the date of today.</span>
 <span class="sd">        :return: The full path to the log file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">script_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">script_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">script_path</span><span class="p">)</span>
         <span class="n">log_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="s2">&quot;logs&quot;</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -210,11 +221,14 @@
 <span class="sd">            DEFAULT: uses in built formatter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">file_handler_class</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span> <span class="k">if</span> <span class="n">use_rotating_file_handler</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span>
-        <span class="n">file_handler</span> <span class="o">=</span> <span class="n">file_handler_class</span><span class="p">(</span>
-            <span class="n">filename</span><span class="o">=</span><span class="n">logfile_path</span><span class="p">,</span>
-            <span class="n">maxBytes</span><span class="o">=</span><span class="n">max_bytes</span><span class="p">,</span>
-            <span class="n">backupCount</span><span class="o">=</span><span class="n">backup_counts</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_rotating_file_handler</span><span class="p">:</span>
+            <span class="n">file_handler</span> <span class="o">=</span> <span class="n">file_handler_class</span><span class="p">(</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">logfile_path</span><span class="p">,</span>
+                <span class="n">backupCount</span><span class="o">=</span><span class="n">backup_counts</span><span class="p">,</span>
+                <span class="n">maxBytes</span><span class="o">=</span><span class="n">max_bytes</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">file_handler</span> <span class="o">=</span> <span class="n">file_handler_class</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">logfile_path</span><span class="p">)</span>
 
         <span class="n">file_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
         <span class="n">file_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span>
@@ -222,7 +236,7 @@
             <span class="k">if</span> <span class="n">custom_logfile_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="n">JSONLineFormatter</span><span class="p">()</span> <span class="k">if</span> <span class="n">log_file_in_json</span>
             <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(fileName)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(lineNo)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(custom_file_name)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(custom_lineno)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">file_handler</span><span class="p">)</span>
@@ -239,7 +253,7 @@
             <span class="n">custom_logfile_formatter</span>
             <span class="k">if</span> <span class="n">custom_logfile_formatter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
-                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(fileName)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(lineNo)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;[</span><span class="si">%(levelname)s</span><span class="s2">|</span><span class="si">%(custom_file_name)s</span><span class="s2">/</span><span class="si">%(custom_func_name)s</span><span class="s2">|</span><span class="si">%(custom_lineno)s</span><span class="s2">] </span><span class="si">%(asctime)s</span><span class="s2"> - args/kwargs: </span><span class="si">%(custom_args)s</span><span class="s2">/</span><span class="si">%(custom_kwargs)s</span><span class="s2"> Returned: </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
@@ -264,7 +278,16 @@
 <span class="sd">        :param log_info: The message to be logged.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">caller_filename</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lineNo_fileName</span><span class="p">()</span>
-        <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fileName&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span> <span class="s2">&quot;lineNo&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span> <span class="s2">&quot;log_info&quot;</span><span class="p">:</span> <span class="n">log_info</span><span class="p">}</span>
+        <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;custom_file_name&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span>  <span class="c1"># Use default value None if not present</span>
+            <span class="s2">&quot;custom_lineno&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span>
+            <span class="s2">&quot;custom_func_name&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">&quot;custom_args&quot;</span> <span class="p">:</span>  <span class="p">{},</span>
+            <span class="s2">&quot;custom_kwargs&quot;</span> <span class="p">:</span>  <span class="p">{},</span>
+            <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="n">log_info</span><span class="p">,</span>
+            <span class="s2">&quot;exc&quot;</span><span class="p">:</span> <span class="kc">None</span>
+        <span class="p">}</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;NonFunctionLog&quot;</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="n">extra</span><span class="p">)</span></div>
 
 
@@ -283,8 +306,8 @@
             <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">any</span><span class="p">:</span>
                 <span class="n">caller_filename</span><span class="p">,</span> <span class="n">lineno</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lineNo_fileName</span><span class="p">()</span>
                 <span class="n">extra</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s2">&quot;fileName&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span>
-                    <span class="s2">&quot;lineNo&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span>
+                    <span class="s2">&quot;custom_file_name&quot;</span><span class="p">:</span> <span class="n">caller_filename</span><span class="p">,</span>
+                    <span class="s2">&quot;custom_lineno&quot;</span><span class="p">:</span> <span class="n">lineno</span><span class="p">,</span>
                     <span class="s2">&quot;custom_func_name&quot;</span><span class="p">:</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
                     <span class="s2">&quot;custom_args&quot;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span>
                     <span class="s2">&quot;custom_kwargs&quot;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">,</span>
@@ -309,7 +332,12 @@
             <span class="k">return</span> <span class="n">wrapper</span>
 
         <span class="k">return</span> <span class="n">decorator</span></div>
-</div>
+
+
+    <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+            <span class="n">handler</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
 
 </pre></div>
 
