@@ -35,4 +35,4 @@ docs = ["sphinx"]
 tests = ["pytest"]
 
 [tool.poetry.scripts]
-run-tests = "run_tests:main"
+power_decos = "run_tests:main"
