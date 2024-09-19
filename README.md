@@ -60,7 +60,7 @@ Or
 
 ## Road Map
 
-1. [ ] Finish Documentation
+1. [ ] Add custom path to log decorator
 
 
 ## Call for Contributions

@@ -15,7 +15,7 @@ def test_get_cached_value_exact_match(cache):
     cache.manual_cache('test_func', 'result_1', 1, 2, key='value')
 
     # Retrieve with exact match
-    result = cache.get_cached_value('test_func', True, 1, 2, key='value')
+    result = cache.get_cached_value('test_func', 1, 2, key='value')
 
     assert result == 'result_1', "Expected result_1 but got different result"
 
@@ -27,7 +27,7 @@ def test_get_cached_value_partial_match_args(cache):
     cache.manual_cache('test_func', 'result_2', 3, 4, key='another_value')
 
     # Retrieve with partial match on args
-    results = cache.get_cached_value('test_func', False, 1, 2)
+    results = cache.get_cached_value('test_func', 1, 2, compare_all=False)
 
     assert results == ['result_1'], "Expected result_1 but got different results"
 

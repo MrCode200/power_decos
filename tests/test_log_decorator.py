@@ -17,6 +17,9 @@ logger_manager = LoggerManager()
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_files():
+    package_root = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(package_root)
+
     yield
 
     def cleanup():
