@@ -7,16 +7,21 @@ Package full of utility decorators
 
 - `get_time()`: Measures and prints the execution time of the decorated function.
 
-- `log_decorator`:
+- `log_decorator` (cls LogManager):
     - `log_init()`: Initializes and configures how logging data should be handled (e.g., terminal, file, JSON).
     - `log_func()`: Logs the entry, exit, and any exceptions of a function to `.jsonl` or `.log` files.
     - `log_info(message: str)`: Logs custom informational messages to `.jsonl` or `.log` files.
 
-Module provides easy-to-use decorators for common tasks like retrying failed operations, measuring execution time, and structured logging.
+- `cache_decorator` (cls Cache):
+    - `clear_cache()`: Clears the cache, resetting it to an empty state.
+    - `manual_cache(func_name: callable, return_value: any, *args, **kwargs)`: Manually adds a result to the cache.
+    - `cache(func: callable)`: Decorator that caches the result of a function call.
+
+This module provides easy-to-use decorators for common tasks like retrying failed operations, measuring execution time, structured logging, and result caching.
 
 **Params**:
-- __version__
-- __author__
+- __version__: The version of the package.
+- __author__: The author of the package.
 """
 
 # still need to work on the docstring
@@ -27,5 +32,6 @@ __author__ = "MrCode200"
 from .retry_decorator import retry
 from .run_time_decorator import get_time
 from .log_decorator import LoggerManager
+from .cache_decorator import Cache
 
-__all__ = ["retry", "get_time", LoggerManager]
+__all__ = ["retry", "get_time", "LoggerManager", "Cache"]
