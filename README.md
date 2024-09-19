@@ -48,7 +48,7 @@ PowerDecos requires `pytest`.  Tests can then be run after installation inside t
 
 ## Documentation
 
-- To view documentation in your website click [here](https://rawcdn.githack.com/MrCode200/power_deco/2c68119deb3f3ae6e606d639651c9efaaaae500a/docs/html/index.html).
+- To view documentation in your website click [here](https://rawcdn.githack.com/MrCode200/power_deco/2ae2dfe5ec7338010a98d0f27f0fd0e7c618eadd/docs/html/index.html).
 
 Or
 
