@@ -36,6 +36,10 @@ A Python package full of various decorator utilities.
 
    ```bash
     pip install git+https://github.com/MrCode200/power_deco.git
+   ```
+   ```bash
+   pip install power_decos
+   ```
 
 ### Testing:
 

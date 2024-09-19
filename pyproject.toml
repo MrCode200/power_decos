@@ -10,7 +10,7 @@ where = ["."]
 
 [project]
 name = "power_decos"
-version = "0.1.1"
+version = "0.1.2"
 description = "A python package full of different decorator utils"
 authors = [
     {name = "MrCode200", email = "navidyaghmaei@gmail.com"}
@@ -21,7 +21,7 @@ dependencies = [
 
 ]
 requires-python = ">=3.10"
-keywords = ["decorators", "log", "retry", "get_time"]
+keywords = ["decorators", "log", "retry", "get_time", "cache"]
 
 [tool.pytest.ini_options]
 minversion = "8.3.2"
