@@ -48,7 +48,7 @@ class Cache:
         key = (func_name, args, frozenset(kwargs.items()))
         self.cache[key] = return_value
 
-    def get_cached_value(self, func_name: callable, compare_all: bool, *args, **kwargs) -> any:
+    def get_cached_value(self, func_name: callable, *args,  compare_all: bool = True, **kwargs) -> any:
         """
         Retrieve cached results based on function name and optionally arguments.
 
@@ -58,7 +58,7 @@ class Cache:
 
         :param func_name: The name of the function whose result is being retrieved.
 
-        :param compare_all: If True, requires an exact match of `func_name`, `args`, and `kwargs`.
+        :keyword compare_all: If True, requires an exact match of `func_name`, `args`, and `kwargs`.
                             If False, allows partial matches where `args` and/or `kwargs` can be omitted.
 
         :param args: Positional arguments used to generate the cache key.
@@ -66,7 +66,6 @@ class Cache:
 
         :param kwargs: Keyword arguments used to generate the cache key.
                        If provided, they are used for partial matching when `compare_all` is False.
-
         Returns:
         --------
 
