@@ -4,10 +4,9 @@
 
 |         | Placeholder                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 |---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Testing | [![CI - Test](https://github.com/pandas-dev/pandas/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/MrCode200/power_deco/tests) [![Coverage](https://codecov.io/github/pandas-dev/pandas/coverage.svg?branch=main)](https://codecov.io/gh/pandas-dev/pandas)                                                                                                                                                                                                                                                                                                            |
-| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/pandas.svg)](https://pypi.org/project/pandas/) [![PyPI Downloads](https://img.shields.io/pypi/dm/pandas.svg?label=PyPI%20downloads)](https://pypi.org/project/pandas/) [![Conda Latest Release](https://anaconda.org/conda-forge/pandas/badges/version.svg)](https://anaconda.org/conda-forge/pandas) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/pandas.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/pandas)                                                                              |
-| Meta    | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - BSD 3-Clause](https://img.shields.io/pypi/l/pandas.svg)](https://github.com/pandas-dev/pandas/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
-
+| Testing | [![CI - Test](https://github.com/MrCode200/power_decos/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/MrCode200/power_decos/actions/workflows/unit-tests.yml) [![Coverage](https://codecov.io/github/MrCode200/power_decos/coverage.svg)](https://codecov.io/gh/MrCode200/power_decos) |
+| Package | [![PyPI Latest Release](https://img.shields.io/pypi/v/power-decos)](https://pypi.org/project/power-decos/) [![PyPI Downloads](https://img.shields.io/pypi/dm/power-decos.svg?label=PyPI%20downloads)](https://pypi.org/project/power-decos/) [![Conda Latest Release](https://img.shields.io/conda/vn/conda-forge/power-decos)](https://anaconda.org/conda-forge/power-decos) [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/power-decos.svg?label=Conda%20downloads)](https://anaconda.org/conda-forge/power-decos) |
+| Meta    | [![Powered by NumFOCUS](https://img.shields.io/badge/powered%20by-NumFOCUS-orange.svg?style=flat&colorA=E1523D&colorB=007D8A)](https://numfocus.org) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3509134.svg)](https://doi.org/10.5281/zenodo.3509134) [![License - MIT](https://img.shields.io/badge/license-MIT-brightgreen)](https://github.com/MrCode200/power_decos/blob/main/LICENSE) [![Slack](https://img.shields.io/badge/join_Slack-information-brightgreen.svg?logo=slack)](https://pandas.pydata.org/docs/dev/development/community.html?highlight=slack#community-slack) |
 
 
 A Python package full of various decorator utilities.
@@ -35,11 +34,7 @@ A Python package full of various decorator utilities.
 1. Ensure you have [Python](https://www.python.org/) installed.
 
    ```bash
-    pip install git+https://github.com/MrCode200/power_deco.git
-   ```
-   ```bash
-   pip install power_decos
-   ```
+    pip install git+https://github.com/MrCode200/power_decos.git
 
 ### Testing:
 
