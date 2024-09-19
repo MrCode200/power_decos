@@ -38,6 +38,7 @@ A Python package full of various decorator utilities.
    ```
    ```bash
     pip install power_decos
+   ```
 
 ### Testing:
 
