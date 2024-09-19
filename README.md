@@ -34,7 +34,10 @@ A Python package full of various decorator utilities.
 1. Ensure you have [Python](https://www.python.org/) installed.
 
    ```bash
-    pip install git+https://github.com/MrCode200/power_decos.git
+    pip install git+https://github.com/MrCode200/power_decos.git   
+   ```
+   ```bash
+    pip install power_decos
 
 ### Testing:
 
