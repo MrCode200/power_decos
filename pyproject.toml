@@ -1,14 +1,4 @@
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"
-
-[tool.setuptools]
-package-dir = {"" = "."}
-
-[tool.setuptools.packages.find]
-where = ["."]
-
-[project]
+[tool.poetry]
 name = "power_decos"
 version = "0.1.2"
 description = "A python package full of different decorator utils"
@@ -16,12 +6,20 @@ authors = [
     {name = "MrCode200", email = "navidyaghmaei@gmail.com"}
 ]
 readme = "README.md"
-license = {text = "MIT"}
-dependencies = [
-
-]
-requires-python = ">=3.10"
+license = "MIT"
 keywords = ["decorators", "log", "retry", "get_time", "cache"]
+dependencies = []
+requires-python = ">=3.10"
+
+[tool.poetry.extras]
+tests = ["pytest"]
+
+[tool.poetry.scripts]
+power_decos = "run_tests:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 minversion = "8.3.2"
