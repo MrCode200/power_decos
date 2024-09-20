@@ -6,24 +6,22 @@ import os
 import shutil
 import time
 
+import platformdirs
+
 import pytest
 import logging
 from datetime import datetime
 from power_decos import LoggerManager
-from unittest.mock import patch, mock_open
 
 # Create an instance of LoggerManager
 logger_manager = LoggerManager()
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_files():
-    package_root = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(package_root)
-
     yield
 
     def cleanup():
-        directory_to_cleanup = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+        directory_to_cleanup = os.path.join(platformdirs.user_log_dir(), "logs")
         if os.path.exists(directory_to_cleanup):
             shutil.rmtree(directory_to_cleanup)
 
@@ -40,12 +38,35 @@ def test_get_logfile_path_creates_directory():
     expected_logfile_name = f"log_{today.month:02d}-{today.day:02d}-{today.year}"
 
     # Expected log directory and file path
-    expected_log_dir_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs")
+    expected_log_dir_path = os.path.join(platformdirs.user_log_path(), "logs")
     expected_path = os.path.join(expected_log_dir_path, f"{expected_logfile_name}.jsonl")
 
     # Validate if the directory and file path exist
     assert os.path.exists(expected_log_dir_path), f"Log directory not created at expected path: {expected_log_dir_path}"
     assert os.path.exists(expected_path), f"Log file not created at expected path: {expected_path}"
+
+
+def test_logger_manager_creates_log_directory_custom_path():
+    """
+    Test to validate the creation of the log directory at a custom path.
+    """
+    # Get the current directory for testing
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    custom_log_dir = os.path.join(current_dir, "test_logs")  # Define a custom log directory
+
+    # Create an instance of LoggerManager
+    logger_manager = LoggerManager()
+
+    # Initialize the logger with the custom log directory
+    logger_manager.init_logger(log_in_terminal=False, log_in_file=True, log_dir_path=custom_log_dir)
+    time.sleep(0.1)
+    logger_manager.init_logger(False, False)
+    # Assert the custom log directory exists
+    assert os.path.exists(custom_log_dir), f"Log directory was not created at expected path: {custom_log_dir}"
+
+    # Clean up: remove the custom log directory after the test
+    if os.path.exists(custom_log_dir):
+        shutil.rmtree(custom_log_dir)  # Remove the directory and its contents
 
 
 def test_func_log_terminal(caplog):
@@ -74,7 +95,7 @@ def test_func_log_file_json():
     # Reinitialize logger to only log in the terminal
     logger_manager.init_logger(log_in_terminal=False, log_in_file=True, log_file_in_json=True, logfile_name="test_log")
     # Excpected Log json file
-    expected_log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "logs\\test_log.jsonl")
+    expected_log_file_path = os.path.join(platformdirs.user_log_dir(), "logs\\test_log.jsonl")
 
     # Define a function to log
     @logger_manager.log_func()

@@ -35,12 +35,14 @@ How To Use This Module
 6. Customize the logging configuration by adding/removing handlers or adjusting log format as needed.
 
 7. Clean up resources explicitly if needed using the `__del__` method which is automatically called when the instance is about to be destroyed.
-    This should be used when needing to access the log json files
+    This should be used when needing to access the log json files or
+
+    logger.init_logger(log_in_terminal = False) # this will also make you able to access the log files
 
 """
 
 import os
-import sys
+import platformdirs
 import logging
 import logging.handlers
 from datetime import datetime
@@ -65,6 +67,7 @@ class LoggerManager:
         max_bytes: int = 1024 * 1024,
         backup_counts: int = 3,
         custom_logfile_formatter = None,
+        log_dir_path = None,
     ):
         """
         Initializes the logging system by setting up handlers for logging to the terminal
@@ -86,9 +89,10 @@ class LoggerManager:
         :keyword max_bytes: The maximum size (in bytes) of the log file before it is rotated.
         :keyword backup_counts: The number of backup files to keep before deleting the oldest.
         :keyword custom_logfile_formatter: A custom formatter for the log file. Defaults to JSONLineFormatter or a text formatter.
+        :keyword logdir_location: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
         """
         self.logger.handlers.clear()
-        logfile_path = self._get_logfile_path(logfile_name)
+        logfile_path = self._get_logfile_path(log_dir_path, logfile_name)
 
         if log_in_file:
             self._add_file_handler(
@@ -103,24 +107,26 @@ class LoggerManager:
         if log_in_terminal:
             self._add_stream_handler(custom_logfile_formatter)
 
-    def _get_logfile_path(self, logfile_name: str) -> str:
+    def _get_logfile_path(self, log_dir_path: str, logfile_name: str) -> str:
         """
         Constructs the path for the log file and ensures the directory exists.
         If the directory does not exist, create a new one.
 
+        :param log_dir_path: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
         :param logfile_name: The name of the log file. If left empty creates a file with the date of today.
         :return: The full path to the log file.
         """
-        script_path = os.path.abspath(sys.argv[1])
-        script_dir = os.path.dirname(script_path)
-        log_dir = os.path.join(script_dir, "logs")
-        os.makedirs(log_dir, exist_ok=True)
+        if log_dir_path is None:
+            caller_script_path = platformdirs.user_log_path()
+            log_dir_path = os.path.join(caller_script_path, "logs")
+
+        os.makedirs(log_dir_path, exist_ok=True)
 
         if logfile_name is None:
             today = datetime.now()
             logfile_name = f"log_{today.month:02d}-{today.day:02d}-{today.year}"
 
-        return os.path.join(log_dir, f"{logfile_name}.jsonl")
+        return os.path.join(log_dir_path, f"{logfile_name}.jsonl")
 
     def _add_file_handler(
         self,
@@ -254,3 +260,6 @@ class LoggerManager:
         for handler in self.logger.handlers:
             handler.close()
             self.logger.removeHandler(handler)
+
+if __name__ == '__main__':
+    print(platformdirs.user_log_dir())
