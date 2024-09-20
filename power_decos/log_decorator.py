@@ -58,16 +58,17 @@ class LoggerManager:
         self.logger.setLevel(logging.DEBUG)
 
     def init_logger(
-        self,
-        log_in_terminal: bool = False,
-        log_in_file: bool = True,
-        logfile_name: str = None,
-        log_file_in_json: bool = True,
-        use_rotating_file_handler: bool = False,
-        max_bytes: int = 1024 * 1024,
-        backup_counts: int = 3,
-        custom_logfile_formatter = None,
-        log_dir_path = None,
+            self,
+            log_in_terminal: bool = False,
+            log_in_file: bool = True,
+            logfile_name: str = None,
+            log_file_in_json: bool = True,
+            use_rotating_file_handler: bool = False,
+            max_bytes: int = 1024 * 1024,
+            backup_counts: int = 3,
+            custom_logfile_formatter=None,
+            log_dir_path=None,
+            auto_dir_path_arguments=None
     ):
         """
         Initializes the logging system by setting up handlers for logging to the terminal
@@ -90,9 +91,24 @@ class LoggerManager:
         :keyword backup_counts: The number of backup files to keep before deleting the oldest.
         :keyword custom_logfile_formatter: A custom formatter for the log file. Defaults to JSONLineFormatter or a text formatter.
         :keyword logdir_location: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
+        :keyword auto_dir_path_arguments: LoggerManager uses `platformdirs.user_log_path()` to determine the log directory automatically. Provide a dictionary with keys corresponding to the arguments accepted by `platformdirs.user_log_path()`. The dictionary must include all required arguments.
         """
+        if not use_rotating_file_handler and log_file_in_json or use_rotating_file_handler or max_bytes != 1024 * 1024 or backup_counts != 3:
+            raise ValueError(
+                "If use_rotating_file_handler is false, log_file_in_json or use_rotating_file_handler or max_bytes or backup_counts cannot be defined ")
+        if log_dir_path is not None and auto_dir_path_arguments is not None:
+            raise ValueError("auto_dir_path_arguments cant be given if a log_dir_path is given")
+
+        if auto_dir_path_arguments is None:
+            auto_dir_path_arguments = {
+                "appname": None,
+                "appauthor": None,
+                "version": None,
+                "opinion": True,
+                "ensure_exists": False}
+
         self.logger.handlers.clear()
-        logfile_path = self._get_logfile_path(log_dir_path, logfile_name)
+        logfile_path = self._get_logfile_path(log_dir_path, logfile_name, auto_dir_path_arguments)
 
         if log_in_file:
             self._add_file_handler(
@@ -107,17 +123,22 @@ class LoggerManager:
         if log_in_terminal:
             self._add_stream_handler(custom_logfile_formatter)
 
-    def _get_logfile_path(self, log_dir_path: str, logfile_name: str) -> str:
+    def _get_logfile_path(self, log_dir_path: str, logfile_name: str, auto_dir_path_args: dict[str, str | bool]) -> str:
         """
         Constructs the path for the log file and ensures the directory exists.
         If the directory does not exist, create a new one.
 
         :param log_dir_path: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
         :param logfile_name: The name of the log file. If left empty creates a file with the date of today.
+        :param auto_dir_path_arguments: LoggerManager uses `platformdirs.user_log_path()` to determine the log directory automatically. Provide a dictionary with keys corresponding to the arguments accepted by `platformdirs.user_log_path()`. The dictionary must include all required arguments.
         :return: The full path to the log file.
         """
         if log_dir_path is None:
-            caller_script_path = platformdirs.user_log_path()
+            caller_script_path = platformdirs.user_log_path(auto_dir_path_args["appname"],
+                                                            auto_dir_path_args["appauthor"],
+                                                            auto_dir_path_args["version"],
+                                                            auto_dir_path_args["opinion"],
+                                                            auto_dir_path_args["ensure_exists"])
             log_dir_path = os.path.join(caller_script_path, "logs")
 
         os.makedirs(log_dir_path, exist_ok=True)
@@ -129,13 +150,13 @@ class LoggerManager:
         return os.path.join(log_dir_path, f"{logfile_name}.jsonl")
 
     def _add_file_handler(
-        self,
-        logfile_path: str,
-        log_file_in_json: bool,
-        use_rotating_file_handler: bool,
-        max_bytes: int,
-        backup_counts: int,
-        custom_logfile_formatter=None
+            self,
+            logfile_path: str,
+            log_file_in_json: bool,
+            use_rotating_file_handler: bool,
+            max_bytes: int,
+            backup_counts: int,
+            custom_logfile_formatter=None
     ):
         """
         Adds a file handler to the logger with specified configurations.
@@ -208,8 +229,8 @@ class LoggerManager:
             "custom_file_name": caller_filename,  # Use default value None if not present
             "custom_lineno": lineno,
             "custom_func_name": None,
-            "custom_args" :  {},
-            "custom_kwargs" :  {},
+            "custom_args": {},
+            "custom_kwargs": {},
             "info": log_info,
             "exc": None
         }
@@ -224,6 +245,7 @@ class LoggerManager:
         :keyword log_info: Additional information to log. `DEFAULT: Doesn't log extra information`
         :return: The decorated function.
         """
+
         def decorator(func: callable) -> callable:
             @wraps(func)
             def wrapper(*args, **kwargs) -> any:
@@ -260,6 +282,7 @@ class LoggerManager:
         for handler in self.logger.handlers:
             handler.close()
             self.logger.removeHandler(handler)
+
 
 if __name__ == '__main__':
     print(platformdirs.user_log_dir())
