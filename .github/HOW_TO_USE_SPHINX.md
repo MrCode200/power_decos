@@ -1,4 +1,4 @@
-## How to Use Sphinx for Generating HTML Documentation
+# How to Use Sphinx for Generating HTML Documentation
 
 ## Table of Contents
 
