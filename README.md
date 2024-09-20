@@ -57,7 +57,7 @@ Or
 
 ## Road Map
 
-1. [ ] Add custom path to log decorator
+1. [x] Add custom path to log decorator
 
 
 ## Call for Contributions
