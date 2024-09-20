@@ -2,17 +2,18 @@
 name = "power_decos"
 version = "0.1.2"
 description = "A python package full of different decorator utils"
-authors = [
-    {name = "MrCode200", email = "navidyaghmaei@gmail.com"}
-]
+authors = ["MrCode200 <navidyaghmaei@gmail.com>"]
 readme = "README.md"
+homepage = "https://mrcode200.github.io/power_decos/"
+repository = "https://github.com/MrCode200/power_decos"
 license = "MIT"
 keywords = ["decorators", "log", "retry", "get_time", "cache"]
-dependencies = []
-requires-python = ">=3.10"
 
-[tool.poetry.extras]
-tests = ["pytest"]
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.2"
 
 [tool.poetry.scripts]
 power_decos = "run_tests:main"
@@ -23,14 +24,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 minversion = "8.3.2"
-addopts = "-ra -q"
+addopts = "-ra -q -v"
 testpaths = ["tests"]
 
 [project.optional-dependencies]
 docs = ["sphinx"]
 
-[tool.poetry.extras]
-tests = ["pytest"]
 
-[tool.poetry.scripts]
-power_decos = "run_tests:main"
