@@ -94,6 +94,3 @@ def test_cache_performance(cache):
 
     # Check that the second call was faster than the first call
     assert duration_second_call < duration_first_call, "The second call should be faster than the first call"
-
-if __name__ == '__main__':
-    pytest.main()

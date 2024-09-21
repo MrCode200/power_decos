@@ -198,7 +198,3 @@ def test_logger_cleanup():
     # Create a new logger to check handlers
     new_logger = LoggerManager()
     assert len(new_logger.logger.handlers) == 0
-
-
-if __name__ == "__main__":
-    pytest.main()

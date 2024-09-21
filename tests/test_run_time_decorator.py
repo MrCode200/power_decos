@@ -13,6 +13,3 @@ def test_decorator_logs_execution_time(caplog):
 
     assert result == "test"
     assert "Function sample_function took" in caplog.text
-
-if __name__ == "__main__":
-    pytest.main()

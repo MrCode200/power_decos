@@ -65,8 +65,3 @@ def test_retry_type_error():
         retry(retries=3, delay=1, raise_exception=True, exception_types=123)  # Invalid type
     with pytest.raises(TypeError, match="Exception\(s\) passed is not a type or a tuple of types."):
         retry(retries=3, delay=1, raise_exception=True, exception_types=[Exception])  # Invalid type, should be a type or tuple
-
-
-
-if __name__ == "__main__":
-    pytest.main()
