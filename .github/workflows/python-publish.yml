@@ -21,8 +21,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install poetry
-        poetry install --no-dev  # Install dependencies specific to power_decos
+        pip install build
     - name: Build package
       run: |
         poetry build  # Use poetry to build the package
