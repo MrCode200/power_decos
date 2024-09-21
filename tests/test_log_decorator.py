@@ -120,10 +120,7 @@ def test_func_log_file_json():
     # Read the JSONL log file and validate contents
     with open(expected_log_file_path, "r") as json_log_file:
         for line in json_log_file:
-            try:
-                log_entry = json.loads(line)
-            except json.JSONDecodeError:
-                pytest.fail(f"Log file at {expected_log_file_path} contains invalid JSON")
+            log_entry = json.loads(line)
 
             # Validate the log entry structure
             assert "timestamp" in log_entry, "Missing 'timestamp' field in log entry"
