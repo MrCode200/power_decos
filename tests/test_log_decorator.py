@@ -141,10 +141,7 @@ def test_func_log_file_json():
             assert log_entry["kwargs"] == {}, f"Unexpected kwargs: {log_entry['kwargs']}"
             assert log_entry["info"] == "testing log_info", f"Unexpected kwargs: {log_entry['info']}"
 
-            try:
-                datetime.fromisoformat(log_entry["timestamp"].replace("Z", "+00:00"))
-            except ValueError:
-                pytest.fail(f"Unexpected timestamp format in entry: {log_entry['timestamp']}")
+            datetime.fromisoformat(log_entry["timestamp"].replace("Z", "+00:00"))
 
 
 def test_log_file_validation():
