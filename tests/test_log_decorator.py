@@ -98,7 +98,7 @@ def test_func_log_file_json():
     # Reinitialize logger to only log in the terminal
     logger_manager.init_logger(log_in_terminal=False, log_in_file=True, log_file_in_json=True, logfile_name="test_log")
     # Excpected Log json file
-    expected_log_file_path = os.path.join(platformdirs.user_log_dir(), "logs, test_log.jsonl")
+    expected_log_file_path = os.path.join(platformdirs.user_log_dir(), "logs", "test_log.jsonl")
 
     # Define a function to log
     @logger_manager.log_func(log_info="testing log_info")
