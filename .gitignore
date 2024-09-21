@@ -154,3 +154,5 @@ _build/
 /docs/power_decos.rst
 /docs/setup.rst
 /docs/tests.rst
+
+/poetry.lock
