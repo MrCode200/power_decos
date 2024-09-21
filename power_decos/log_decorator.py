@@ -90,12 +90,12 @@ class LoggerManager:
         :keyword max_bytes: The maximum size (in bytes) of the log file before it is rotated.
         :keyword backup_counts: The number of backup files to keep before deleting the oldest.
         :keyword custom_logfile_formatter: A custom formatter for the log file. Defaults to JSONLineFormatter or a text formatter.
-        :keyword logdir_location: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
+        :keyword logdir_location: The name of the log dir. If left None creates a dir under the \\Users\\<username>\\AppData\\Local\\Logs
         :keyword auto_dir_path_arguments: LoggerManager uses `platformdirs.user_log_path()` to determine the log directory automatically. Provide a dictionary with keys corresponding to the arguments accepted by `platformdirs.user_log_path()`. The dictionary must include all required arguments.
         """
-        if not use_rotating_file_handler and log_file_in_json or use_rotating_file_handler or max_bytes != 1024 * 1024 or backup_counts != 3:
+        if not log_file_in_json and use_rotating_file_handler == True or max_bytes != 1024 * 1024 or backup_counts != 3:
             raise ValueError(
-                "If use_rotating_file_handler is false, log_file_in_json or use_rotating_file_handler or max_bytes or backup_counts cannot be defined ")
+                "If log_file_in_json is false, use_rotating_file_handler or max_bytes or backup_counts cannot be defined ")
         if log_dir_path is not None and auto_dir_path_arguments is not None:
             raise ValueError("auto_dir_path_arguments cant be given if a log_dir_path is given")
 
@@ -128,7 +128,7 @@ class LoggerManager:
         Constructs the path for the log file and ensures the directory exists.
         If the directory does not exist, create a new one.
 
-        :param log_dir_path: The name of the log dir. If left None creates a dir under the \Users\<username>\\AppData\Local\Logs
+        :param log_dir_path: The name of the log dir. If left None creates a dir under the \\Users\\<username>\\AppData\\Local\\Logs
         :param logfile_name: The name of the log file. If left empty creates a file with the date of today.
         :param auto_dir_path_arguments: LoggerManager uses `platformdirs.user_log_path()` to determine the log directory automatically. Provide a dictionary with keys corresponding to the arguments accepted by `platformdirs.user_log_path()`. The dictionary must include all required arguments.
         :return: The full path to the log file.
