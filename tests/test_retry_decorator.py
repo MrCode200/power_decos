@@ -50,5 +50,23 @@ def test_retry_delay():
     assert True if expected_delay <= elapsed_time < expected_delay + 1 else False, f"Delay did not work as expected. Elapsed time: {elapsed_time}. Excpected delay: {expected_delay}"
 
 
+def test_retry_value_error():
+    """Test that ValueError is raised when retries < 1 or delay <= 0."""
+    with pytest.raises(ValueError, match="Arguments are wrong! retries >= 1; delay > 0"):
+        retry(retries=0, delay=1)  # retries < 1
+    with pytest.raises(ValueError, match="Arguments are wrong! retries >= 1; delay > 0"):
+        retry(retries=1, delay=0)  # delay <= 0
+
+def test_retry_type_error():
+    """Test that TypeError is raised when exception_types is not a type or a tuple."""
+    with pytest.raises(TypeError, match="Exception\(s\) passed is not a type or a tuple of types."):
+        retry(retries=3, delay=1, raise_exception=True, exception_types="not_a_type")  # Invalid type
+    with pytest.raises(TypeError, match="Exception\(s\) passed is not a type or a tuple of types."):
+        retry(retries=3, delay=1, raise_exception=True, exception_types=123)  # Invalid type
+    with pytest.raises(TypeError, match="Exception\(s\) passed is not a type or a tuple of types."):
+        retry(retries=3, delay=1, raise_exception=True, exception_types=[Exception])  # Invalid type, should be a type or tuple
+
+
+
 if __name__ == "__main__":
     pytest.main()

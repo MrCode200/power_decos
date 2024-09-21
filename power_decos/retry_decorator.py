@@ -77,7 +77,7 @@ def retry(
     if retries < 1 or delay <= 0:
         raise ValueError("Arguments are wrong! retries >= 1; delay > 0")
 
-    if isinstance(raise_exception, (type, tuple)):
+    if not isinstance(exception_types, (type, tuple)):
         raise TypeError("Exception(s) passed is not a type or a tuple of types.")
 
     def decorator(func: callable) -> callable:

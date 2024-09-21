@@ -1,10 +1,12 @@
 """
 test_func_log_terminal not working
 """
+import gc
 import json
 import os
 import shutil
 import time
+from pickle import FALSE
 
 import platformdirs
 
@@ -25,6 +27,7 @@ def cleanup_files():
         if os.path.exists(directory_to_cleanup):
             shutil.rmtree(directory_to_cleanup)
 
+    time.sleep(1)
     cleanup()
 
 def test_get_logfile_path_creates_directory():
@@ -95,10 +98,10 @@ def test_func_log_file_json():
     # Reinitialize logger to only log in the terminal
     logger_manager.init_logger(log_in_terminal=False, log_in_file=True, log_file_in_json=True, logfile_name="test_log")
     # Excpected Log json file
-    expected_log_file_path = os.path.join(platformdirs.user_log_dir(), "logs\\test_log.jsonl")
+    expected_log_file_path = os.path.join(platformdirs.user_log_dir(), "logs, test_log.jsonl")
 
     # Define a function to log
-    @logger_manager.log_func()
+    @logger_manager.log_func(log_info="testing log_info")
     def important_func(x: int, y: int):
         return x + y
 
@@ -130,6 +133,7 @@ def test_func_log_file_json():
             assert "function_name" in log_entry, "Missing 'function_name' field in log entry"
             assert "returned" in log_entry, "Missing 'returned' field in log entry"
             assert "exc" in log_entry, "Log entry missing 'exc' field"
+            assert "info" in log_entry, "Log entry missing 'info' field"
 
             # Further checks based on expected values
             assert log_entry["level"] == "DEBUG", f"Unexpected log level in entry: {log_entry}"
@@ -138,11 +142,62 @@ def test_func_log_file_json():
             assert log_entry["returned"] == "3", f"Unexpected returned value: {log_entry['returned']}"
             assert log_entry["args"] == [1, 2], f"Unexpected args: {log_entry['args']}"
             assert log_entry["kwargs"] == {}, f"Unexpected kwargs: {log_entry['kwargs']}"
+            assert log_entry["info"] == "testing log_info", f"Unexpected kwargs: {log_entry['info']}"
 
             try:
                 datetime.fromisoformat(log_entry["timestamp"].replace("Z", "+00:00"))
             except ValueError:
                 pytest.fail(f"Unexpected timestamp format in entry: {log_entry['timestamp']}")
+
+
+def test_log_file_validation():
+    """
+    Test function to check if the terminal logging raise error for using args which don't impact the code without defining other arguments.
+    """
+    logger = LoggerManager()
+
+    # Test that ValueError is raised when use_rotating_file_handler is False but other params are defined
+    with pytest.raises(ValueError, match="If use_rotating_file_handler is false, max_bytes or backup_counts cannot be defined"):
+        logger.init_logger(use_rotating_file_handler=False, max_bytes=100*100)
+    # Test that ValueError is raised when use_rotating_file_handler is False but other params are defined
+    with pytest.raises(ValueError, match="If use_rotating_file_handler is false, max_bytes or backup_counts cannot be defined"):
+        logger.init_logger(use_rotating_file_handler=False, backup_counts=2)
+
+    # Test that ValueError is raised when both log_dir_path and auto_dir_path_arguments are provided
+    with pytest.raises(ValueError, match="auto_dir_path_arguments cant be given if a log_dir_path is given"):
+        logger.init_logger(log_dir_path="some_path", auto_dir_path_arguments={"appname": "test"})
+
+
+def test_logging_exceptions():
+    logger = LoggerManager()
+    logger.init_logger(log_in_terminal=True)  # Initialize logger
+
+    @logger.log_func(skip_exception=False)  # Set skip_exception to True for this test
+    def function_that_raises_without_skip_exception():
+        raise ValueError("An error occurred!")
+
+    @logger.log_func(skip_exception=True)  # Set skip_exception to True for this test
+    def function_that_raises_with_skip_exception():
+        raise ValueError("An error occurred!")
+
+    # Capture the logging output
+    with pytest.raises(ValueError, match="An error occurred!"):
+        function_that_raises_without_skip_exception()
+
+    function_that_raises_with_skip_exception()
+
+
+def test_logger_cleanup():
+    logger = LoggerManager()
+    logger.init_logger(log_in_terminal=True)
+
+    # Simulate destruction of logger
+    del logger
+    gc.collect()
+
+    # Create a new logger to check handlers
+    new_logger = LoggerManager()
+    assert len(new_logger.logger.handlers) == 0
 
 
 if __name__ == "__main__":

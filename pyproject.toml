@@ -10,10 +10,11 @@ license = "MIT"
 keywords = ["decorators", "log", "retry", "get_time", "cache"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.group.docs.dependencies]
 sphinx = "^8.0.2"
@@ -24,5 +25,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 minversion = "8.3.2"
-addopts = "-v"
+addopts = "-v --cov=power_decos --cov-report=term-missing"
 testpaths = ["tests"]

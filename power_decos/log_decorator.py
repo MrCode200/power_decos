@@ -93,9 +93,9 @@ class LoggerManager:
         :keyword logdir_location: The name of the log dir. If left None creates a dir under the \\Users\\<username>\\AppData\\Local\\Logs
         :keyword auto_dir_path_arguments: LoggerManager uses `platformdirs.user_log_path()` to determine the log directory automatically. Provide a dictionary with keys corresponding to the arguments accepted by `platformdirs.user_log_path()`. The dictionary must include all required arguments.
         """
-        if not log_file_in_json and use_rotating_file_handler == True or max_bytes != 1024 * 1024 or backup_counts != 3:
-            raise ValueError(
-                "If log_file_in_json is false, use_rotating_file_handler or max_bytes or backup_counts cannot be defined ")
+        # check if arguments are not the predefined arguments
+        if not use_rotating_file_handler and max_bytes != 1024 * 1024 or backup_counts != 3:
+            raise ValueError("If use_rotating_file_handler is false, max_bytes or backup_counts cannot be defined")
         if log_dir_path is not None and auto_dir_path_arguments is not None:
             raise ValueError("auto_dir_path_arguments cant be given if a log_dir_path is given")
 
@@ -282,7 +282,3 @@ class LoggerManager:
         for handler in self.logger.handlers:
             handler.close()
             self.logger.removeHandler(handler)
-
-
-if __name__ == '__main__':
-    print(platformdirs.user_log_dir())

@@ -44,8 +44,9 @@ A Python package full of various decorator utilities.
 ### Testing:
 
 PowerDecos requires `pytest`. Tests can then be run after installation inside the package folder with:
-
-1. run:```pytest -v```
+- run:`pytest`
+- or run: `poetry run pytest`
+- to get a html coverage review add `--cov-report=html` to the end of `pytest`
 
 ## Documentation
 
