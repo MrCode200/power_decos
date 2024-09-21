@@ -10,7 +10,7 @@ license = "MIT"
 keywords = ["decorators", "log", "retry", "get_time", "cache"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python >= "3.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
