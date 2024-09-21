@@ -73,7 +73,7 @@ Please refer to our [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ## Credits
 
-- No Credits yet
+- [shenanigansd](https://github.com/shenanigansd) helped create and fix github actions :)
 
 ## Getting Help
 
