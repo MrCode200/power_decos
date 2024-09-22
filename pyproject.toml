@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "power_decos"
-version = "0.1.4"
+version = "0.1.5"
 description = "A python package full of different decorator utils"
 authors = ["MrCode200 <navidyaghmaei@gmail.com>"]
 readme = "README.md"
