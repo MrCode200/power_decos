@@ -24,7 +24,6 @@ A Python package full of various decorator utilities.
 - [License](LICENSE.txt)
 - [Documentation](#documentation)
 - [Road Map](#road-map)
-- [Getting Help](#getting-help)
 - [Discussion and Development](#discussion-and-development)
 - [Call for Contributions](#call-for-contributions)
 - [Credits](#credits)
