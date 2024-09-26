@@ -16,20 +16,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Specify Python version if needed
+          python-version: '3.x'
 
-      - name: Create virtual environment
-        run: python -m venv venv
+      - name: Install dependencies
+        run: pip install pytest pytest-cov
 
-      - name: Activate virtual environment and install dependencies
-        run: |
-          source venv/bin/activate
-          pip install pytest pytest-cov
-
-      - name: Run tests with coverage
-        run: |
-          source venv/bin/activate
-          pytest --cov --cov-report=xml
+      - name: Run tests
+        run: pytest --cov --cov-report=xml
 
       - name: Upload results to Codecov
         uses: codecov/codecov-action@v4
