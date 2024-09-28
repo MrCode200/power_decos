@@ -8,6 +8,10 @@ SET GREEN=!ESC![1;32m
 SET RED=!ESC![1;31m
 SET RESET=!ESC![0m
 
+pip install sphinx sphinx_rtd_theme
+
+echo %GREEN% SUCCESSFULL [0/11]: Installed libaries and dependencies. %RESET%
+
 cd %~dp0 || (echo %RED% FAILED: Couldn't get current path. Exiting... %RESET% & exit /b 1)
 echo %GREEN% SUCCESSFULL [1/11]: Moved to script path: %currentPath% %RESET%
 
