@@ -3,14 +3,14 @@ power\_decos package
 
 Submodules
 ----------
+
 power\_decos.cache\_decorator module
-----------------------------------------
+------------------------------------
 
 .. automodule:: power_decos.cache_decorator
    :members:
    :undoc-members:
    :show-inheritance:
-
 
 power\_decos.log\_decorator module
 ----------------------------------
