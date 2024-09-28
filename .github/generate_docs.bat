@@ -15,6 +15,8 @@ echo HTML files moved successfully(? - throws error dont know why when using || 
 IF EXIST "_build\html" rmdir /S /Q "_build\html" || (echo Failed to delete html folder inside _build. Exiting.. & exit/b 1)
 echo Deleted html files inside _build
 
+git add ./html/ || (echo Failed to add html directory inside docs. Exiting... & exit /b 1)
+
 git commit -a -m "Updated documentation" || (echo Failed to commit changes. Exiting... & exit /b 1)
 echo Changes committed successfully.
 
