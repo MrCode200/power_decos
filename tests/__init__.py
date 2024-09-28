@@ -3,8 +3,10 @@
 
 PowerDecos requires `pytest`.  Tests can then be run after installation inside the package folder with:
 
-1. run:```pytest tests/test_log_decorator.py```
-2. Excpect: ```3 failed, 10 passed```
-3. run: ```pytest tests/test_log_decorator.py```
-4. Excpect: ```3 passed```
+PowerDecos requires `pytest`. Tests can then be run after installation:
+- run:`pytest`
+- or run: `poetry run pytest`
+- to get a html coverage review add `--cov-report=html` to the end of `pytest`
+
+NOTE: if it doesn't work try to go inside the folder and then run the commands
 """
