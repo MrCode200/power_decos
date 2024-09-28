@@ -1,40 +1,64 @@
 @echo off
-cd %~dp0 || (echo Failed to get current path. Exiting... & exit /b 1)
-echo Successfully moved to script path: %currentPath%
+for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
+
+SETLOCAL EnableDelayedExpansion
+
+:: Set ANSI colors
+SET GREEN=!ESC![1;32m
+SET RED=!ESC![1;31m
+SET RESET=!ESC![0m
+
+cd %~dp0 || (echo %RED% FAILED: Couldn't get current path. Exiting... %RESET% & exit /b 1)
+echo %GREEN% SUCCESSFULL [1/11]: Moved to script path: %currentPath% %RESET%
 
 echo %cd%
-cd ..\docs || (echo Failed to change directory to docs. Exiting... & exit /b 1)
-echo Changed directory to docs.
+cd ..\docs || (echo %RED% FAILED: Couldn't change directory to docs. Exiting... %RESET% & exit /b 1)
+echo %GREEN% SUCCESSFULL [2/11]: Changed directory to docs. %RESET%
 
-call .\make.bat html || (echo Failed to run make.bat. Exiting... & exit /b 1)
-echo Documentation generated successfully.
+SET /P USER_INPUT="Have you setup the sphinx (One time action)? (y/n): "
+
+IF /I "%USER_INPUT%"=="n" (
+    call ..\.github\init_docs.bat || (echo %RED% FAILED: Initialization of sphinx documentation failed %RESET% & exit /b 1)
+    echo %GREEN% SUCCESSFULL [3/11]: Successfully initilized sphinx documentation. %RESET%
+    exit /b 1
+)
+
+SET /P USER_INPUT="Have you added new files(modules/packages/testsfiles) - (NOTE: Not edited)? (y/n): "
+
+IF /I "%USER_INPUT%"=="n" (
+    del modules.rst
+    del power_decos.rst
+    del tests.rst
+
+    sphinx-apidoc -o docs . || (echo %RED% FAILED: Couldn't run `sphinx-apidoc -o docs .` -> no rst files generated %RESET% & exit /b 1)
+    echo %GREEN% SUCCESSFULL [4/11]: Created rst files %RESET%
+)
+
+call .\make.bat html || (echo %RED% FAILED: Couldn't run make.bat. Exiting... %RESET% & exit /b 1)
+echo %GREEN% SUCCESSFULL [5/11]: Documentation generated successfully. %RESET%
 
 robocopy "_build\html" "html" /E /MOVE /R:3 /W:5 /V
-echo HTML files moved successfully(? - throws error dont know why when using || exit /b 1).
+echo %GREEN% SUCCESSFULL [6/11]: HTML files moved successfully. %RESET%
 
-IF EXIST "_build\html" rmdir /S /Q "_build\html" || (echo Failed to delete html folder inside _build. Exiting.. & exit/b 1)
-echo Deleted html files inside _build
+IF EXIST "_build\html" rmdir /S /Q "_build\html" || (echo %RED% FAILED: Couldn't delete html folder inside _build. Exiting... %RESET% & exit /b 1)
+echo %GREEN% SUCCESSFULL [7/11]: Deleted html files inside _build. %RESET%
 
-git add ./html/ || (echo Failed to add html directory inside docs. Exiting... & exit /b 1)
-echo Successfully tracked html file (git)
+git add ./html/ || (echo %RED% FAILED: Couldn't add html directory inside docs. Exiting... %RESET% & exit /b 1)
+echo %GREEN% SUCCESSFULL [8/11]: Tracked html file (git). %RESET%
 
 SET /P USER_INPUT="Do you want to commit and push html directory to github? (y/n): "
 
 IF /I "%USER_INPUT%"=="y" (
+    git commit html -m "Updated documentation" || (echo %RED% FAILED: Couldn't commit changes. Exiting... %RESET% & exit /b 1)
+    echo %GREEN% SUCCESSFULL [9/11]: Changes inside html directory committed successfully. %RESET%
 
-    git commit html -m "Updated documentation" || (echo Failed to commit changes. Exiting... & exit /b 1)
-    echo Changes inside html directory committed successfully.
-
-    git push || (echo Failed to push changes. Exiting... & exit /b 1)
-    echo Changes pushed successfully.
+    git push || (echo %RED% FAILED: Couldn't push changes. Exiting... %RESET% & exit /b 1)
+    echo %GREEN% SUCCESSFULL [10/11]: Changes pushed successfully. %RESET%
 
     @echo on
-    git status || (echo Failed to retrieve Git status. Exiting... & exit /b 1)
+    git status || (echo %RED% FAILED: Couldn't retrieve Git status. Exiting... %RESET% & exit /b 1)
 
-    echo Process Finished. Exiting...
-
+    echo %GREEN% SUCCESSFULL [11/11]: Process Finished. Exiting... %RESET%
 ) ELSE (
-    echo Process Finished. Exiting...
+    echo %GREEN% SUCCESSFULL [11/11]: Process Finished. Exiting... %RESET%
 )
-
-

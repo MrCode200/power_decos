@@ -10,6 +10,8 @@
 - [Steps to Update the Sphinx HTML Documentation](#steps-to-update-the-sphinx-html-documentation)
 - [Command Summary of Update the Sphinx HTML Documentation:](#command-summary-of-update-the-sphinx-html-documentation)
 
+### All steps till [Optional: Host the HTML Documentation Online](#optional-host-the-html-documentation-online) and [Steps to Update the Sphinx HTML Documentation](#steps-to-update-the-sphinx-html-documentation) can be skipped by running [power_decos\.github\generate_docs.bat](./generate_docs.bat)
+
 ### First Time Setup Commands:
 1. #### Initialize Sphinx:
     ```
@@ -65,8 +67,8 @@ and other necessary files. Answer the prompts based on your project setup.3.
     html_static_path = ['_static']```
    
 ### Generating HTML Documentation
-1. #### Build the HTML(This step can be skipped by running [power_decos\.github\generate_docs.bat](./generate_docs.bat))
-    Once everything is set up, go back to the `docs` directory:
+1. #### Build the HTML
+   Once everything is set up, go back to the `docs` directory:
     ```
     > cd docs
     > .\make.bat html  # On Windows
@@ -76,6 +78,8 @@ and other necessary files. Answer the prompts based on your project setup.3.
    This command generates the HTML documentation in the docs/_build/html/ folder. Best to move it from docs/_build/html/ to docs/html/
    
    You can open index.html in your browser to view it.
+   
+   NOTE: only the html folder is needed
 
 3. #### Open Website in Browser:
     - Once created you can move the `html` folder outside of _build
