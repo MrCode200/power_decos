@@ -65,8 +65,7 @@ and other necessary files. Answer the prompts based on your project setup.3.
     html_static_path = ['_static']```
    
 ### Generating HTML Documentation
-0. ### This step can be skipped by running [power_decos\.github\generate_docs.bat](./generate_docs.bat)
-1. #### Build the HTML
+1. #### Build the HTML(This step can be skipped by running [power_decos\.github\generate_docs.bat](./generate_docs.bat))
     Once everything is set up, go back to the `docs` directory:
     ```
     > cd docs
@@ -74,10 +73,11 @@ and other necessary files. Answer the prompts based on your project setup.3.
     # or
     > make html        # On Unix/macOS
     ```
-   This command generates the HTML documentation in the docs/_build/html/ folder. 
-    You can open index.html in your browser to view it.
+   This command generates the HTML documentation in the docs/_build/html/ folder. Best to move it from docs/_build/html/ to docs/html/
+   
+   You can open index.html in your browser to view it.
 
-2. #### Open Website in Browser:
+3. #### Open Website in Browser:
     - Once created you can move the `html` folder outside of _build
     - To run the website in your local browser open the `html` file and run the `index.html`
 
