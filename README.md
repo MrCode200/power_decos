@@ -51,7 +51,7 @@ Note if it doesnt work try to go inside the folder and then run the commands
 
 ## Documentation
 
-- To view documentation in your website click [here](https://rawcdn.githack.com/MrCode200/power_deco/2ae2dfe5ec7338010a98d0f27f0fd0e7c618eadd/docs/html/index.html).
+- To view documentation in your website click [here](https://raw.githack.com/MrCode200/power_decos/refs/heads/main/docs/html/index.html).
 
 Or
 
