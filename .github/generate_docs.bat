@@ -16,12 +16,25 @@ IF EXIST "_build\html" rmdir /S /Q "_build\html" || (echo Failed to delete html 
 echo Deleted html files inside _build
 
 git add ./html/ || (echo Failed to add html directory inside docs. Exiting... & exit /b 1)
+echo Successfully tracked html file (git)
 
-git commit -a -m "Updated documentation" || (echo Failed to commit changes. Exiting... & exit /b 1)
-echo Changes committed successfully.
+SET /P USER_INPUT="Do you want to commit and push html directory to github? (y/n): "
 
-git push || (echo Failed to push changes. Exiting... & exit /b 1)
-echo Changes pushed successfully.
+IF /I "%USER_INPUT%"=="y" (
 
-@echo on
-git status || (echo Failed to retrieve Git status. Exiting... & exit /b 1)
+    git commit html -m "Updated documentation" || (echo Failed to commit changes. Exiting... & exit /b 1)
+    echo Changes inside html directory committed successfully.
+
+    git push || (echo Failed to push changes. Exiting... & exit /b 1)
+    echo Changes pushed successfully.
+
+    @echo on
+    git status || (echo Failed to retrieve Git status. Exiting... & exit /b 1)
+
+    echo Process Finished. Exiting...
+
+) ELSE (
+    echo Process Finished. Exiting...
+)
+
+
