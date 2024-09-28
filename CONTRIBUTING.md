@@ -34,5 +34,5 @@ Thank you for considering contributing to `power_deco`! We appreciate your inter
 If you find a **bug** or have a **suggestion**, please open an **issue** in the Issues section. Provide as much **detail** as possible, including **steps to reproduce** the issue and any error messages.
 
 # Thank You
-We’re thrilled to have you contribute to power_deco and look forward to your improvements!
+We’re thrilled to have you contribute to `power_deco` and look forward to your improvements!
 ![img.png](images/contributionThanks.png)
