@@ -84,10 +84,9 @@ and other necessary files. Answer the prompts based on your project setup.3.
 ### Optional: Host the HTML Documentation Online
 
 1. #### Use RawGitHack for Hosting
-- In your GitHub repository, navigate to the `index.html` file inside.
-- Click on the three dots (`...`) next to the file and choose `Copy Permalink`
-- Visit https://raw.githack.com/
-- Paste the permalink into RawGitHack, 
+- open your index.html file inside github.com
+- click on raw button above the html code
+- change in the url `raw.githubusercontent.com` with `raw.githack.com`
 and it will give you a usable URL for sharing your documentation. 
 
 2. #### Share the URL:
