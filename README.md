@@ -82,5 +82,5 @@ For any questions or support, please first read our [FAQ.md](FAQ.md)
 
 Then contact:
 
-- **Your Name** - [luffydmoneky19992024@gmail.com](mailto:luffydmoneky19992024@gmail.com)
+- **Your Name** - [navidyaghmaei@gmail.com](mailto:navidyaghmaei@gmail.com)
 - **Project Link** - [https://github.com/MrCode200/power_deco](https://github.com/MrCode200/power_deco)
