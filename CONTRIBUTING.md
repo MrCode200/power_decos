@@ -10,7 +10,7 @@ Thank you for considering contributing to `power_deco`! We appreciate your inter
 2. **Clone Your Fork**: Clone your fork to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/power_deco.git
+   git clone https://github.com/MrCode200/power_deco.git
 
 3. **Create a Branch**: Create a new branch for your work:
 

@@ -30,7 +30,7 @@ We have zero tolerance for behavior that is harmful. This includes:
 
 If you encounter or witness behavior that doesn’t align with our Code of Conduct, we please report it:
 
-1. **Report It**: Reach out to us at [luffydmoneky19992024@gmail.com](mailto:luffydmoneky19992024@gmail.com) to report any concerns.
+1. **Report It**: Reach out to us at [navidyaghmaei@gmail.com](mailto:navidyaghmaei@gmail.com) to report any concerns.
 2. **What Happens Next**: Once a report is received, we’ll review it and determine the best course of action. We aim to resolve issues promptly and fairly.
 3. **Confidentiality**: We respect your privacy. Reports will be handled confidentially, and we’ll protect the identities of all parties involved. 
 
@@ -41,7 +41,7 @@ We are committed to maintaining a positive and supportive environment for everyo
 
 ## Thank You!
 
-Thank you for helping us create a great community. For more information on contributing, check out our [CONTRIBUTING.md](CONTRIBUTING.md).
+Thank you for helping us create a great community. For more information on contributing, check out our [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ## Inspired By
 
