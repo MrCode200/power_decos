@@ -65,6 +65,7 @@ and other necessary files. Answer the prompts based on your project setup.3.
     html_static_path = ['_static']```
    
 ### Generating HTML Documentation
+0. ### This step can be skipped by running .\.github\generate_docs.bat
 1. #### Build the HTML
     Once everything is set up, go back to the `docs` directory:
     ```
