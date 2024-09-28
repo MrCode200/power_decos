@@ -5,7 +5,7 @@ Submodules
 ----------
 
 tests.test\_cache\_decorator module
----------------------------------
+-----------------------------------
 
 .. automodule:: tests.test_cache_decorator
    :members:

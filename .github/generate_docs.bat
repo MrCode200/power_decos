@@ -30,12 +30,16 @@ IF /I "%USER_INPUT%"=="n" (
 SET /P USER_INPUT="Have you added new files(modules/packages/testsfiles) - (NOTE: Not edited)? (y/n): "
 
 IF /I "%USER_INPUT%"=="n" (
+    cd ..
+
     del modules.rst
     del power_decos.rst
     del tests.rst
 
     sphinx-apidoc -o docs . || (echo %RED% FAILED: Couldn't run `sphinx-apidoc -o docs .` -> no rst files generated %RESET% & exit /b 1)
     echo %GREEN% SUCCESSFULL [4/11]: Created rst files %RESET%
+
+    cd docs
 )
 
 call .\make.bat html || (echo %RED% FAILED: Couldn't run make.bat. Exiting... %RESET% & exit /b 1)
