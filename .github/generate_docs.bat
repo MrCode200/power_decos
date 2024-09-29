@@ -28,12 +28,19 @@ IF /I "%USER_INPUT%"=="n" (
 
 SET /P USER_INPUT="Have you added new files(modules/packages/testsfiles) - (NOTE: Not edited)? (y/n): "
 
-IF /I "%USER_INPUT%"=="n" (
-    cd ..
+IF /I "%USER_INPUT%"=="y" (
+    for %%f in (*.rst) do (
+        if /i not "%%f"=="index.rst" (
+            del "%%f"
+            if exist "%%f" (
+                echo %RED% FAILED: Couldn't delete %%f. Exiting... %RESET%
+                exit /b 1
+            )
+            echo %GREEN% SUCCESSFULL: Deleted: %%f
+        )
+    )
 
-    del modules.rst
-    del power_decos.rst
-    del tests.rst
+    cd ..
 
     sphinx-apidoc -o docs . || (echo %RED% FAILED: Couldn't run `sphinx-apidoc -o docs .` -> no rst files generated %RESET% & exit /b 1)
     echo %GREEN% SUCCESSFULL [4/11]: Created rst files %RESET%
