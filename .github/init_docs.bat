@@ -1,4 +1,6 @@
 @ECHO OFF
+setlocal
+
 :: sphinx-quickstart command
 sphinx-quickstart || (echo !RED!BOLD FAILED: sphinx-quickstart did not run !RESET! & exit /b 1)
 echo !GREEN!BOLD SUCCESSFUL [1/7]: sphinx-quickstart completed !RESET!
@@ -67,3 +69,5 @@ powershell -Command ^
     "(Get-Content 'conf.py') | ForEach-Object { if ($_ -match '^html_theme =') { 'html_theme = \"sphinx_rtd_theme\"' } else { $_ } } | Set-Content 'conf.py'" || (echo !RED! FAILED: Couldn't modify theme in config.py !RESET! & exit /b 1)
 
 echo !GREEN! SUCCESSFUL [7/7]: Modified theme in config.py !RESET!
+
+endlocal
