@@ -24,7 +24,6 @@ SET /P USER_INPUT="Have you setup the sphinx (One time action)? (y/n): "
 IF /I "%USER_INPUT%"=="n" (
     call ..\.github\init_docs.bat || (echo %RED% FAILED: Initialization of sphinx documentation failed %RESET% & exit /b 1)
     echo %GREEN% SUCCESSFULL [3/11]: Successfully initilized sphinx documentation. %RESET%
-    exit /b 1
 )
 
 SET /P USER_INPUT="Have you added new files(modules/packages/testsfiles) - (NOTE: Not edited)? (y/n): "
