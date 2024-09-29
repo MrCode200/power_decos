@@ -31,7 +31,7 @@ echo !GREEN! SUCCESSFUL [3/7]: Deleted lines in index.rst !RESET!
 :: Insert 'modules' into index.rst
 powershell -Command ^
     "$content = Get-Content 'index.rst';" ^
-    "$newContent = $content[0..11] + '    modules' + $content[12..($content.Count - 1)];" ^
+    "$newContent = $content[0..11] + '  modules' + $content[12..($content.Count - 1)];" ^
     "$newContent | Set-Content 'index.rst';"
 
 :: Check ERRORLEVEL after the PowerShell command
