@@ -61,7 +61,8 @@ Or
 ## Road Map
 
 1. [x] Add custom path to log decorator
-
+2. [x] Create cache decorator
+3. [ ] Add threading decorator
 
 ## Call for Contributions
 
