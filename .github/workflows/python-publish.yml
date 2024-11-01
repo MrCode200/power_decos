@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Build and inspect Python 🐍 package 📦
-        uses: hynek/build-and-inspect-python-package@73aea398b9c8de9ea9e4464c6b13cb8b1f3d6294 # v2.9.0
+        uses: hynek/build-and-inspect-python-package@f01e4d047aadcc0c054c95ec9900da3ec3fc7a0f # v2.10.0
         with:
           attest-build-provenance-github: ${{ github.event.action == 'published' }}
 
@@ -41,7 +41,7 @@ jobs:
         path: dist/
 
     - name: Publish distribution 📦 to PyPI
-      uses: pypa/gh-action-pypi-publish@897895f1e160c830e369f9779632ebc134688e1b # v1.10.2
+      uses: pypa/gh-action-pypi-publish@fb13cb306901256ace3dab689990e13a5550ffaa # v1.11.0
       with:
           attestations: true
           verbose: true
